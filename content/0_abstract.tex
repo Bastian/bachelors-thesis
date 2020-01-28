@@ -8,4 +8,15 @@
 \section*{Abstract}
 \label{sec:abstract}
 
-\blindtext
+This work analyzes how a state-of-the-art pretrained neural network - such as Google's BERT \cite{devlin2018bert} - can be fine-tuned to the task of abstractive text summarization in the context of meetings.
+
+As part of this work a Transformer network \cite{1706.03762} was developed, that uses BERT as its encoder and a plain decoder.
+It was trained on the AMI Meeting Corpus \cite{Mccowan05theami} as well as the ICSI Meeting Corpus \cite{Janin}.
+The summarization was performed using a two-step approach:
+First, the network was trained to summarize \(n\) dialouge acts to a single sentence of the meeting's abstraive summary.
+Afterwards, a whole meeting was split by its topics and all the dialouge acts of a topic were fed into the trained network as its input.
+The concatenated outputs of the Transformer for every topic is the final summary.
+
+The work proofs, that a data-driven approach is feasible in theory.
+However, the results have a strong bias towards the context of the meeting and cross-corpus validation on AMI and ICSI shows a very poor performance.
+This indicates, that far more training data is necessary for practicable results outside of a very topic-specific context like the scenario meetings of the AMI corpus. 
