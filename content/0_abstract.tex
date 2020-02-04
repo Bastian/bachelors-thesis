@@ -2,7 +2,21 @@
 \section*{Kurzdarstellung}
 \label{sec:kurzdarstellung}
 
-\blindtext
+Die vorliegende Bachelorarbeit untersucht, wie ein modernes vortrainiertes neuronales Netz, wie z.B. Googles BERT \cite{devlin2018bert}, zur abstrakten Textzusammenfassung von Meetings genutzt werden kann.
+
+Im Rahmen dieser Arbeit wird ein Tranformer Netz \cite{1706.03762} implementiert, das BERT als seinen Encoder nutzt.
+Der Decoder des Netzes ist ein normaler, nicht vortrainierter, Transormer-Decoder.
+Das Netz wird hierfür mit Daten aus dem AMI Meeting Corpus \cite{Mccowan05theami} und dem ICSI Meeting Corpus \cite{Janin} trainiert.
+Es wird dafür ein 2-stufiges Verfahren genutzt:
+Im ersten Schritt wird das Netzwerk darauf trainiert, eine Menge von Dialogen auf einen einzelnen Satz abzubilden, der aus der abstrakten Zusammenfassung des Meetings stammt.
+Im zweiten Schritt werden die Meetings nach Themen aufgeteilt und anschließend alle Dialoge eines Themas als Eingabe für das neuronale Netz genutzt.
+Die zusammengehängte Ausgabe des Netzes für alle Themen eines Meetings ist dann die fertige Zusammenfassung des gesamten Meetings.
+
+Die Arbeit zeigt, dass ein datengetriebener Ansatz in der Theorie funktioniert.
+Allerdings haben die Ergebnisse eine sehr starke Neigung dazu, Informationen aus den Traingsdaten in die Zusammenfassung einfliesen zu lassen, selbst wenn diese nicht in der Eingabe vorhanden sind.
+Dies ist besonders offensichtlich, wenn ein Netz, das nur mit dem AMI Korpus trainiert wurde, auf den ICSI Corpus angewendet wird.
+Die hierbei erziehlten Ergebnisse sind meist sehr schlecht.
+Hieraus lässt sich ableiten, dass wesentlich mehr Trainigsdaten notwendig sind, um praxistaugliche Ergebnisse zu erziehlen, die unabhängig von einem stark eingegrenzten Kontext, wie es bei den AMI Szenario-Meetings der Fall ist, sind.
 
 
 \section*{Abstract}
