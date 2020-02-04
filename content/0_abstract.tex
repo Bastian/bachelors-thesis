@@ -13,7 +13,7 @@ This work analyzes how a state-of-the-art pretrained neural network - such as Go
 As part of this work a Transformer network \cite{1706.03762} was developed, that uses BERT as its encoder and a plain decoder.
 It was trained on the AMI Meeting Corpus \cite{Mccowan05theami} as well as the ICSI Meeting Corpus \cite{Janin}.
 The summarization was performed using a two-step approach:
-First, the network was trained to summarize \(n\) dialouge acts to a single sentence of the meeting's abstraive summary.
+First, the network was trained to summarize \(n\) dialouge acts to a single sentence of the meeting's abstractive summary.
 Afterwards, a whole meeting was split by its topics and all the dialouge acts of a topic were fed into the trained network as its input.
 The concatenated outputs of the Transformer for every topic is the final summary.
 
