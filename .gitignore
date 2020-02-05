@@ -11,3 +11,5 @@
 *.out
 thesis.pdf
 *.synctex.gz
+refs.bib.bak
+refs.bib.sav
