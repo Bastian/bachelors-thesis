@@ -7,10 +7,12 @@ Die vorliegende Bachelorarbeit untersucht, wie ein modernes vortrainiertes neuro
 Im Rahmen dieser Arbeit wird ein Tranformer Netz \cite{1706.03762} implementiert, das BERT als seinen Encoder nutzt.
 Der Decoder des Netzes ist ein normaler, nicht vortrainierter, Transormer-Decoder.
 Das Netz wird hierfür mit Daten aus dem AMI Meeting Corpus \cite{Mccowan05theami} und dem ICSI Meeting Corpus \cite{Janin} trainiert.
-Es wird dafür ein 2-stufiges Verfahren genutzt:
+Es wird dafür ein 2-stufiges Verfahren genutzt.
 Im ersten Schritt wird das Netzwerk darauf trainiert, eine Menge von Dialogen auf einen einzelnen Satz abzubilden, der aus der abstrakten Zusammenfassung des Meetings stammt.
 Im zweiten Schritt werden die Meetings nach Themen aufgeteilt und anschließend alle Dialoge eines Themas als Eingabe für das neuronale Netz genutzt.
 Die zusammengehängte Ausgabe des Netzes für alle Themen eines Meetings ist dann die fertige Zusammenfassung des gesamten Meetings.
+Dies dient zum einen dazu, den benötigten Speicherbedarf von BERT bei langen Textsequenzen zu reduzieren.
+Zum anderen kann damit auch das Problem umgangen werden, dass BERT nur mit Textsequenzen bis zu einer Länge von 512 vortrainiert wurde \cite[p.~13]{devlin2018bert}.
 
 Die Arbeit zeigt, dass ein datengetriebener Ansatz in der Theorie funktioniert.
 Allerdings haben die Ergebnisse eine sehr starke Neigung dazu, Informationen aus den Traingsdaten in die Zusammenfassung einfliesen zu lassen, selbst wenn diese nicht in der Eingabe vorhanden sind.
@@ -26,7 +28,7 @@ This work analyzes how a state-of-the-art pretrained neural network - such as Go
 
 As part of this work a Transformer network \cite{1706.03762} is developed, that uses BERT as its encoder and a plain decoder.
 It is trained on the AMI Meeting Corpus \cite{Mccowan05theami} as well as the ICSI Meeting Corpus \cite{Janin}.
-The summarization is performed using a two-step approach:
+To circumvent the high memory usage of BERT at long sequence lengths and the fact that BERT is pre-trained with a maxiumum sequence length of 512 \cite[p.~13]{devlin2018bert}, the summarization is performed using a two-step approach.
 First, the network is trained to summarize \(n\) dialouge acts to a single sentence of the meeting's abstractive summary.
 Afterwards, a whole meeting is split by its topics and all the dialouge acts of a topic are fed into the trained network as its input.
 The concatenated outputs of the Transformer for every topic is the final summary.
