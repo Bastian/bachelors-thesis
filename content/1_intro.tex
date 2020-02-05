@@ -1,3 +1,45 @@
 \chapter{Introduction}\label{ch:Introduction}
 
-\Blindtext
+% Motivation
+
+Transfer Learning is known to improve results on many different machine learning tasks.
+Google's recently announced language representation model BERT broke records for many Natural Language Processing benchmarks \cite[p.~5--7]{devlin2018bert}, such as  SQuAD v1.1 \cite{rajpurkar-etal-2016-squad} or GLUE \cite{1804.07461}.
+There have been some attempts to apply BERT to the problem of abstractive summarization, like \cite{1902.09243} and \cite{1908.08345}.
+However, they are usually trained and tested on news articles.
+Generating abstractive summaries of meetings is only a rarely researched topic.
+Most of the research for summarizing meetings has been focused on either extractive summarization or non Deep Learning approaches such as Dependency Graph Fusion \cite{1609.07035} or Multi-Sentence Compression \cite{shang-etal-2018-unsupervised}.
+
+% ==============
+% PROBLEM DEFINITION
+% ==============
+
+\section{Problem Definition}
+
+The goal of this work is to analyze, if a data driven approach is feasible for abstractive meeting summarization.
+Transfer Learning should be used to compensate for the small amount of training data that is available for meeting summarization.
+As BERT's pre-training sequence length of 512 \cite[p.~13]{devlin2018bert} is way shorter than a typical meeting, a method should be developed that deals with this limitation.
+
+% ======
+% METHOD
+% ======
+
+\section{Method}
+
+As part of this work, a network is developed that uses BERT.
+It is trained with data from the two most commonly used meeting corpora, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin}.
+Cross-corpus validation\footnote{\Eg training on the ICSI corpus and testing on the AMI corpus} is performed to evaluate if the network is able to generalize what it learned.
+
+% =================
+% STRUCTURE OF THE WORK
+% =================
+
+\section{Structure of the work}
+
+Chapter \ref{ch:theoretical-foundation} explains the theoretical foundation that is necessary for this work.
+Chapter \ref{ch:used-corpora} introduces the two used meeting corpora.
+Chapter \ref{ch:concept} explains the concept of the model that this works uses.
+It will also present how the model is trained.
+Chapter \ref{ch:implementation} focuses on the implementation if the model and how the training data is processed.
+Chapter \ref{ch:results} presents the results. It shows both the archived scores and provide some hand-picked example outputs.
+Chapter \ref{ch:outlook} gives an outlook for possible future research.
+Finally, chapter \ref{ch:summary-and-conclusion} summarizes the results of the work and draws a conclusion how they can be interpreted.
