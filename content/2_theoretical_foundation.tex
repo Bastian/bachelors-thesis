@@ -44,13 +44,101 @@
 
 \section{BERT}
 
-\Blindtext
+BERT (\textbf{B}idirectional \textbf{E}ncoder \textbf{R}epresentations from \textbf{T}ransformers) is a general-purpose language model, that was released by Google AI researchers in mid 2018.
+It broke several records for Natural Language Processing Benchmarks \cite[p.~5--7]{devlin2018bert}, such as  SQuAD v1.1 \cite{rajpurkar-etal-2016-squad} or GLUE \cite{1804.07461}.
 
 \subsection{Motivation}
 
-\Blindtext
+It has been shown, that results for many natural language processing tasks can be improved with the help of language models.
+The most famous amoung them are OpenAI's GPT-2 \cite{radford2019language} and ELMo \cite{1802.05365}.
+The benefit of language models is, that most of them can be trained on unlabeled data, like Wikipedia articles or large book corpora.
+This allows them to learn from a huge amount of data, as there is no need for time-consuming labeling of the training data and any texts can be used.
+By pre-training them on normal texts, the networks can get a general sense of natural language.
+This general sense for language can then be used for more specific tasks.
+
+% TODO Not sure if I keep using this or create an own one / just remove it
+\begin{figure}[h]
+\centering
+\includegraphics{figures/bert-gpt2-elmo-model-comparison}
+\caption[Visualisation of the different model architectures]{Visualisation of the different model architectures \cite[p.~13]{devlin2018bert}.}
+\label{fig:bert-gpt2-elmo-model-comparison.pdf}
+\end{figure}
+
+What's new about BERT, compared to other models like GPT-2, is, that it is the first deeply bidirectional language model, that takes advantage of the whole context around of a word.
+OpenAI's GPT-2 uses a left-to-right Transformer \cite[p.~4]{radford2019language}, which only allows it to "look" at the words to the left, when generating a representation for an input token.
+For example, when having a sentence that starts with "The lighter", the network can only look at these two words to generate a representation for the word "lighter".
+However, the word can have completely different meanings, depending on the whole sentence, e.g. "The lighter is an easy tool to make fire" compared to "The lighter shade of red looks better than the darker one". 
+ELMo tries to compensate this issue by training two LSTMs with one being a normal forward LSTM (left-to-right) and the other one being a backward LSTM (right-to-left) which is given the input sequence in reverse \cite[p.~2--3]{1802.05365}.
+Afterwards, it concatenates the representations of these two LSTMs to get a semi-bidirectional representation.
+\autoref{fig:bert-gpt2-elmo-model-comparison.pdf} visualizes the different architectures.
 
 \subsection{Model Architecture}
 
-\Blindtext
+\subsubsection{Input and Output Representations}
 
+BERT's input tries to be applicable for many different natural language processing tasks.
+It allows the inputs of either one sentence or a pair of two sentences, with sentences refering to ``an arbitrary span of contiguous text, rather than an actual linguistic sentence'' \cite[p.~4]{devlin2018bert}.
+Texts are tokenized by using WorkPiece embeddings with a vocabulary of 30'000 tokens. % TODO Maybe explain the tokenization in more detail
+Every input sequence starts with a special \texttt{[CLS]} token and every sentence ends with a special \texttt{[SEP]} token.
+Additionally to the token embeddings, the input consists of two more types of embeddings.
+A learned segment embeddings, that indicates if a token belongs to the first or the second token, and trained position embeddings, that help the network to understand the positions of each token in the sequence.
+Finally, these three embeddings are concatendated to form the actual input for the network as shown in \autoref{fig:bert-input-representation}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/bert-input-representation}
+\caption[BERT input representation]{BERT input representation \cite[p.~5]{devlin2018bert}.}
+\label{fig:bert-input-representation}
+\end{figure}
+
+Depending on the task to perform, there are different ways to use the final hidden states of the BERT Transformer network.
+For sentence classification tasks, the \texttt{[CLS]} token representation can be used.
+This work uses the final hidden states for every single input token, as the Decoder should have access to the presentation of every input token.
+For the simpler extractive summarization task, which is basically some kind of sentence classification in which each sentence is either classified as \texttt{"include in summary"} or \texttt{"do not include in summary"}, it can be sufficient to only use the final hidden state of the \texttt{[CLS]} token. 
+\cite{1903.10318} proposes a small input variation for BERT, that inserts multiple \texttt{[CLS]} tokens into the input sequence to later use them for extractive summarization.
+
+\subsubsection{Pre-Training Objectives}
+
+BERT is pre-trained with two different tasks \cite[p.~4--5]{devlin2018bert}.
+For the first task, the network is given a sentence with 15\% of its word piece tokens b randomly masked.
+An example for masking is shown in \autoref{bert_masking_example}.
+
+% TODO Exact source is https://github.com/google-research/bert#what-is-bert
+% TODO I need to ask my prof if the current mentioning of the GitHub page is enough
+\begin{lstlisting}[caption={Masked input example. Taken from the BERT GitHub page.},captionpos=b,numbers=none,label=bert_masking_example]
+Input: the man went to the [MASK1] . he bought a [MASK2] of milk.
+Labels: [MASK1] = store; [MASK2] = gallon
+\end{lstlisting}
+
+The task of the network is, to predict the masked tokens.
+This task allows the network to take the context of a word into consideration.
+
+For the second task, the network is given two sentences.
+The network then has to predict, if the second of these two sentences comes after the first one in the original text or if it is just a randomly selected sentence from any other text.
+An example for next sentence prediction is shown in \autoref{bert_next_sentence_example}.
+
+% TODO Exact source is https://github.com/google-research/bert#what-is-bert
+% TODO I need to ask my prof if the current mentioning of the GitHub page is enough
+\begin{lstlisting}[caption={Next sentence prediction example. Taken from the BERT GitHub page.},captionpos=b,numbers=none,label=bert_next_sentence_example]
+Sentence A: the man went to the store .
+Sentence B: he bought a gallon of milk .
+Label: IsNextSentence
+
+Sentence A: the man went to the store .
+Sentence B: penguins are flightless .
+Label: NotNextSentence
+\end{lstlisting}
+
+Ideally, this helps the network to understand the relationship between two sentences.
+However, this task has been shown to be too simple for the network, as it is easier for it to just learn if the topics of two sentences match instead of understanding the real relationship of the sentences.
+Newer successors of BERT such as ALBERT use slightly changed training objectives, like sentence order prediction \cite[p.~3]{1909.11942} in which the goal is to predict, which of two given sentences comes first.
+
+Pre-training is usually very expensive.
+The training was performed for 4 days on 4 Cloud TPUs for BERT\textsubscript{BASE} and 16 Cloud TPUs for the larger model BERT\textsubscript{LARGE} with each Cloud TPU having 4 TPU chips \cite[p.~13]{devlin2018bert}.
+However, it is only necessary to do pre-training once.
+
+\subsubsection{Fine-Tuning}
+
+After the unsupervised pre-training, the network can be fine-tuned for a specific task.
+Fine-Tuning is far less expensive than pre-training and can usually be done in less than 1 hour on a single Cloud TPU, or a few hours on a normal GPU \cite[p.~5]{devlin2018bert}.
+% TODO This chapter can be a bit longer...
