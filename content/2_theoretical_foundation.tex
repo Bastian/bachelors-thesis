@@ -16,11 +16,36 @@
 
 \section{Transformer}
 
-\Blindtext
+The Transformer is a neural network architecture for sequence learning that was published in 2017 \cite{1706.03762}.
+It achived new state-of-the-art results for many machine translation tasks while at the same time requiring significat less training time compared to previous well performing models.
 
 \subsection{Motivation}
 
-\Blindtext
+In the recent years, recurrent neural networks (RNNs) have been the most common way to solve sequence learning tasks.
+One of the big downsides of RNNs is its sequential behaviour.
+To train a RNN, the elements of the input sequence is fed into the neural network one after another.
+While the sequence elements are passed through the RNN, a hidden state gets computed at every step, that is part of the input for the next step.
+This process is called encoding.
+Afterwards, the last hidden state of the econding process is used as an input for the first step of the decoding process.
+Because of this, it is not possible to parallelize the training within a training example, as the hidden state of the previous step is needed to calculate the output of the current step. \cite[p.~~2]{1706.03762}
+A simplified RNN for sequence-to-sequence tasks like machine translation is shown in \autoref{fig:rnn-visualisation}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/rnn-visualisation}
+\caption{Simplified visualisation of a sequence-to-sequence RNN network for machine translation. The input sequence is fed into the Encoder with one word each step. The final hidden state, that is computed in the last encoding step, is used as input for the first decoding step. The initial hidden state $h_{start}$ can be initialized as a vector of zeros or learned during training.}
+\label{fig:rnn-visualisation}
+\end{figure}
+
+Another problem of RNNs is the long distance, information has to "travel" before it is used.
+Information that was encoded into the hidden state has to pass through multiple encoding and decoding steps, before it is finally used in one of the decoding steps.
+Besides having the hidden state as an information bottleneck, this also makes it very hard for the network to learn long range dependencies because of the problem of vanishing or explosing gradients \cite{Hochreiter01gradientflow}.
+Modern variants of RNNs like the long short-term memory (LSTM) architecture \cite{Hochreiter1997} try to mitigate these effects, but aren't able to fully elliminate them.
+A fairly recent solution to this problem is the attention mechanism, that was first proposed in 2014 \cite{1409.0473}.
+It allows the network in the decoding stage to retrieve information from any hidden state that was computed during the encoding stage.
+This eliminates the problem of learning long range dependencies.
+
+The Transformer network tries to take advantage of the attention mechanism while ditching the recurrence of RNNs to achieve faster training and allowing for more parallelization.
 
 \subsection{Model Architecture}
 
@@ -61,7 +86,7 @@ This general sense for language can then be used for more specific tasks.
 \centering
 \includegraphics{figures/bert-gpt2-elmo-model-comparison}
 \caption[Visualisation of the different model architectures]{Visualisation of the different model architectures \cite[p.~13]{devlin2018bert}.}
-\label{fig:bert-gpt2-elmo-model-comparison.pdf}
+\label{fig:bert-gpt2-elmo-model-comparison}
 \end{figure}
 
 What's new about BERT, compared to other models like GPT-2, is, that it is the first deeply bidirectional language model, that takes advantage of the whole context around of a word.
@@ -70,7 +95,7 @@ For example, when having a sentence that starts with "The lighter", the network 
 However, the word can have completely different meanings, depending on the whole sentence, e.g. "The lighter is an easy tool to make fire" compared to "The lighter shade of red looks better than the darker one". 
 ELMo tries to compensate this issue by training two LSTMs with one being a normal forward LSTM (left-to-right) and the other one being a backward LSTM (right-to-left) which is given the input sequence in reverse \cite[p.~2--3]{1802.05365}.
 Afterwards, it concatenates the representations of these two LSTMs to get a semi-bidirectional representation.
-\autoref{fig:bert-gpt2-elmo-model-comparison.pdf} visualizes the different architectures.
+\autoref{fig:bert-gpt2-elmo-model-comparison} visualizes the different architectures.
 
 \subsection{Model Architecture}
 
