@@ -14,10 +14,10 @@
 % TRANSFORMER
 % ==========
 
-\section{Transformer}
+\section{Transformer}\label{sec:transformer}
 
 The Transformer is a neural network architecture for sequence learning that was published in 2017 \cite{1706.03762}.
-It achived new state-of-the-art results for many machine translation tasks while at the same time requiring significat less training time compared to previous well performing models.
+It achieved new state-of-the-art results for many machine translation tasks while at the same time requiring significant less training time compared to previous well performing models.
 
 \subsection{Motivation}
 
@@ -28,19 +28,19 @@ While the sequence elements are passed through the RNN, a hidden state gets comp
 This process is called encoding.
 Afterwards, the last hidden state of the econding process is used as an input for the first step of the decoding process.
 Because of this, it is not possible to parallelize the training within a training example, as the hidden state of the previous step is needed to calculate the output of the current step. \cite[p.~~2]{1706.03762}
-A simplified RNN for sequence-to-sequence tasks like machine translation is shown in \autoref{fig:rnn-visualisation}.
+A simplified RNN for sequence-to-sequence tasks like machine translation is shown in \autoref{fig:rnn-visualization}.
 
 \begin{figure}[h]
 \centering
-\includegraphics{figures/rnn-visualisation}
-\caption{Simplified visualisation of a sequence-to-sequence RNN network for machine translation. The input sequence is fed into the Encoder with one word each step. The final hidden state, that is computed in the last encoding step, is used as input for the first decoding step. The initial hidden state $h_{start}$ can be initialized as a vector of zeros or learned during training.}
-\label{fig:rnn-visualisation}
+\includegraphics{figures/rnn-visualization}
+\caption[Simplified visualization of a sequence-to-sequence RNN network for machine translation]{Simplified visualization of a sequence-to-sequence RNN network for machine translation. The input sequence is fed into the Encoder with one word each step. The final hidden state, that is computed in the last encoding step, is used as input for the first decoding step. The initial hidden state $h_{start}$ can be initialized as a vector of zeros or learned during training.}
+\label{fig:rnn-visualization}
 \end{figure}
 
 Another problem of RNNs is the long distance, information has to "travel" before it is used.
 Information that was encoded into the hidden state has to pass through multiple encoding and decoding steps, before it is finally used in one of the decoding steps.
-Besides having the hidden state as an information bottleneck, this also makes it very hard for the network to learn long range dependencies because of the problem of vanishing or explosing gradients \cite{Hochreiter01gradientflow}.
-Modern variants of RNNs like the long short-term memory (LSTM) architecture \cite{Hochreiter1997} try to mitigate these effects, but aren't able to fully elliminate them.
+Besides having the hidden state as an information bottleneck, this also makes it very hard for the network to learn long range dependencies because of the problem of vanishing or exploding gradients \cite{Hochreiter01gradientflow}.
+Modern variants of RNNs like the long short-term memory (LSTM) architecture \cite{Hochreiter1997} try to mitigate these effects, but aren't able to fully eliminate them.
 A fairly recent solution to this problem is the attention mechanism, that was first proposed in 2014 \cite{1409.0473}.
 It allows the network in the decoding stage to retrieve information from any hidden state that was computed during the encoding stage.
 This eliminates the problem of learning long range dependencies.
@@ -49,19 +49,68 @@ The Transformer network tries to take advantage of the attention mechanism while
 
 \subsection{Model Architecture}
 
-\Blindtext
+Just like sequence-to-sequence RNNs, the Transformer consists of an encoder and a decoder that both consist of a stack of layers.
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/transformer-model}
+\caption[Model architecture of a Transformer]{Model architecture of a Transformer \cite[p.~~3]{1706.03762}.}
+\label{fig:transformer-model}
+\end{figure}
+
+An encoder layer consists of two sub-layers.
+The first sub-layer is a multi-head self-attention mechanism which is described later in this section.
+The second sub-layer is a position-wise fully connected feed-forward network.
+Both sub-layers have residual connections \cite{1512.03385} around them, that are followed by layer normalization \cite{1607.06450}.
+The outputs of the layers have $d_{model}=512$ dimensions.
+
+The encoder layer has a similar structure, but with one additional sub-layer and a slight modification of the multi-head self-attention sub-layer.
+The new sub-layer is able to attend to the output of the encoder.
+The multi-head self-attention sub-layer is masked, to prevent it from attending to future words. \cite[p.~~3]{1706.03762}.
+
+The inputs are simple learned embedding vectors of dimension $d_{model}$ that are concatenated with a fixed positional embedding \cite[p.~~5--6]{1706.03762}.
+This fixed input embeddings encode the position of the sequence elements, as this information is otherwise no longer accessible to the network because of the missing recurrence.
+The positional encoding is calculated with sine and cosine functions of different frequencies:
+\begin{align*} 
+	PE_{(pos,2i)} & = sin(pos/10000^{2i/d_{model}}) \\
+	PE_{(pos,2i+1)} & = cos(pos/10000^{2i/d_{model}})
+\end{align*}
+
+This encoding allows the network to obtain information about the absolute and relative position of each element.
+\autoref{fig:positional-encoding-sine-cosine} visualizes the embedding for some dimensions.
+It is clearly visible how each position has a different embedding.
+
+For the outputs, a learned linear transformation and a softmax function are used to generate next-token probabilities \cite[p.~~5]{1706.03762}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\paperwidth]{figures/positional-encoding-sine-cosine}
+\caption[Visualization of positional encoding with sine and cosine]{Visualization of positional encoding with sine and cosine \cite{annotated.transformer}.}
+\label{fig:positional-encoding-sine-cosine}
+\end{figure}
+
+\subsubsection{Attention}\label{sssec:attention}
+
+The Transformer attention consists of query, key, and value vectors.
+The query vectors are used to select values by their corresponsing keys.
+In the Transformer, this is implemented as a "Scaled Dot-Product Attention".
+
+% TODO Continue attention
+
+\[
+	\textrm{Attention}(Q,K,V) = \textrm{softmax}(\dfrac{QK^T}{\sqrt{d_k}})V
+\]
+
+ 
 
 \subsection{Difference to RNNs}
 
-\Blindtext
 
 \subsection{Advantages}
 
-\Blindtext
 
 \subsection{Disadvantages}
 
-\Blindtext
 
 % ====
 % BERT
@@ -84,7 +133,7 @@ This general sense for language can then be used for more specific tasks.
 % TODO Not sure if I keep using this or create an own one / just remove it
 \begin{figure}[h]
 \centering
-\includegraphics{figures/bert-gpt2-elmo-model-comparison}
+\includegraphics[width=0.7\paperwidth]{figures/bert-gpt2-elmo-model-comparison}
 \caption[Visualisation of the different model architectures]{Visualisation of the different model architectures \cite[p.~13]{devlin2018bert}.}
 \label{fig:bert-gpt2-elmo-model-comparison}
 \end{figure}
@@ -99,6 +148,8 @@ Afterwards, it concatenates the representations of these two LSTMs to get a semi
 
 \subsection{Model Architecture}
 
+At its core, BERT is just a Transformer decoder, as described in \autoref{sec:transformer}.
+
 \subsubsection{Input and Output Representations}
 
 BERT's input tries to be applicable for many different natural language processing tasks.
@@ -106,7 +157,9 @@ It allows the inputs of either one sentence or a pair of two sentences, with sen
 Texts are tokenized by using WorkPiece embeddings with a vocabulary of 30'000 tokens. % TODO Maybe explain the tokenization in more detail
 Every input sequence starts with a special \texttt{[CLS]} token and every sentence ends with a special \texttt{[SEP]} token.
 Additionally to the token embeddings, the input consists of two more types of embeddings.
-A learned segment embeddings, that indicates if a token belongs to the first or the second token, and trained position embeddings, that help the network to understand the positions of each token in the sequence.
+The first one are a learned segment embeddings, that indicates if a token belongs to the first or the second token.
+The second one are position embeddings, that help the network to understand the positions of each token in the sequence.
+Unlike the original Transformer, BERT does not use fixed posisional embeddings, but learned ones.
 Finally, these three embeddings are concatendated to form the actual input for the network as shown in \autoref{fig:bert-input-representation}.
 
 \begin{figure}[h]
