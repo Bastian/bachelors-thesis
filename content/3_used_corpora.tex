@@ -1,14 +1,104 @@
 \chapter{Used Corpora}\label{ch:used-corpora}
 
-\Blindtext
+For this work, two corpora for meeting data are used, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin}.
 
 % ==============
 % AMI MEETING CORPUS
 % ==============
 
-\section{AMI Meeting Corpus}
+\section{AMI Meeting Corpus}\label{sec:ami-meeting-corpus}
 
-\Blindtext
+The AMI Meeting Corpus is a corpus for meetings, published by the AMI (Augmented Multi-party Interaction) project in 2006 \cite{Mccowan05theami}.
+It contains very detailed annotation of 100 hours of meeting recordings.
+The relevant aspects and annotation of the AMI Meeting Corpus, that are relevant for this work, are briefly explained below.
+
+\subsection{Scenario and Non-Scenario meetings}
+
+The AMI Meeting Corpus contains data for two different types of meetings: Scenario meetings and non-scenario meetings.
+For this work, only the data from the scenario meetings are used, as the non-scenario meetings are missing some annotations that are necessary for this work.
+The following paragraphs describe the scenario of the scenario meetings.
+
+For the scenario meetings, participants play employees of an electronics company that work together on a project.
+They are part of a design team, which tries to develop a prototype for a television remote, because the existing ones are considered not user-friendly, unattractive and old-fashioned.
+The participants are assigned one of the following roles:
+\begin{itemize}
+\item A project manager
+\item A marketing expert
+\item A user interface designer
+\item An industrial designer
+\end{itemize}
+
+Each project consists of 4 meetings:
+\begin{itemize}
+\item A project kick-off meeting
+\item A meeting for the functional design of the remote, such as user requirements, technical functionality and the working design
+\item A meeting for the conceptual design of the remote's components, such as the materials or the user interface
+\item A final meeting to finalize the design and evaluate the results.
+\end{itemize}
+Before each meetings, the participants perform individual work.
+
+In total, data for 35 of these projects is available, each with the 4 meetings. \cite[p.~2]{Mccowan05theami}
+
+\subsection{Annotations}
+
+The following annotations are available and used in this work:
+
+\subsubsection{Dialogue Acts}
+
+The transcription of the whole meeting is split into smaller pieces on a per-person basis.
+These subsets of the transcription are called "Dialogue Acts".
+A dialogue act tries to group word, that belong together to form a speaker's attention, e.g. a question.
+Every word of the transcription is part of exactly one dialogue act.
+Each dialogue act is classified by its content, but this classification is not used in this work. \cite{amiWebsite}
+
+\subsubsection{Topic Segmentation}
+
+Each meeting is split into multiple topics that by themselves may be split into subtopics.
+Examples for topics are "industrial designer presentation", "evaluation of prototype" or "project specs and roles of
+participants" to name a few. \cite{amiWebsite}
+
+\subsubsection{Abstractive Summaries}
+
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
+S1: The project manager introduced the upcoming project to the 
+    team members and then the team members participated in an
+    exercise in which they drew their favorite animal and
+    discussed what they liked about the animal.
+S2: The project manager talked about the project finances and
+    selling prices.
+S3: The team then discussed various features to consider in making
+    the remote.
+\end{lstlisting}
+\caption{Example abstract of abstractive summary for scenario meeting \texttt{ES2002a}.}
+\label{fig:abstractive-summary-example}
+\end{figure}
+
+For each meeting, abstractive summaries are available.
+Each abstractive summary consists of an abstract, decisions, problems/issues and actions, but this work is only using the abstract.
+Usually, the abstract consists of multiple sentences.
+An example for such an abstract with 3 sentences is shown in \autoref{fig:abstractive-summary-example}.
+
+Additionally, for each sentence of the abstractive summary, one or more dialogue acts are selected, that are linked together.
+This mapping of $n$ dialogue acts to $1$ sentence of the summary is later used for training, as described in \label{sec:concept-training} in more detail. \cite{amiWebsite}
+
+\subsection{Segmentation of the corpus}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}ll@{}}
+\toprule
+\multicolumn{1}{c}{Set} & \multicolumn{1}{c}{Time} \\ \midrule
+Training & $\sim$50 hours \\
+Development & $\sim$11 hours \\
+Test & $\sim$11 hours \\ \bottomrule
+\end{tabular}
+\caption[Distribution of meeting time of train, dev and test sets]{Distribution of meeting time of train, dev and test sets \cite{amiWebsite}.}
+\label{tab:meeting-time-distribution}
+\end{table}
+
+To make results comparable with other works that use the corpus, it is split into training, development and test sets.
+For the scenario meetings, the data distribution is shown in \autoref{tab:meeting-time-distribution}. \cite{amiWebsite}
 
 % ==============
 % ICSI MEETING CORPUS
@@ -16,4 +106,18 @@
 
 \section{ICSI Meeting Corpus}
 
-\Blindtext
+The ICSI Meeting Corpus, that contains meetings that were collected at the International Computer Science Institute (ICSI) over a period of three years.
+It contains about 72 hours of meeting data. \cite{Janin}
+As it has a very similar structure than the AMI Meeting corpus described in \autoref{sec:ami-meeting-corpus}, this chapter will only focus on their differences.
+
+\subsection{Scenario}
+
+Unlike the scenario meetings of the AMI Meeting Corpus, the ICSI Meeting Corpus are natural meetings that do not have a specific topic.
+However, as the meetings are all recorded at the ICSI, they usually follow a specific type.
+Because of this, every meeting of the corpus is classified as on one of 5 different meeting types. \cite{Janin}
+% TODO Maybe name/describe the 5 types of meetings. But as they are not really important, I will omit them for now...
+
+\subsection{Segmentation of the corpus}
+
+Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development and test sets.
+Because of this missing split, this work will mainly work with the AMI Meeting Corpus and only use the ICSI Meeting Corpus for cross-corpus-validation.
