@@ -23,7 +23,7 @@ It achieved new state-of-the-art results for many machine translation tasks whil
 
 In the recent years, recurrent neural networks (RNNs) have been the most common way to solve sequence learning tasks.
 One of the big downsides of RNNs is its sequential behaviour.
-To train a RNN, the elements of the input sequence is fed into the neural network one after another.
+To train a RNN, the elements of the input sequence are fed into the neural network one after another.
 While the sequence elements are passed through the RNN, a hidden state gets computed at every step, that is part of the input for the next step.
 This process is called encoding.
 Afterwards, the last hidden state of the econding process is used as an input for the first step of the decoding process.
@@ -45,7 +45,7 @@ A fairly recent solution to this problem is the attention mechanism, that was fi
 It allows the network in the decoding stage to retrieve information from any hidden state that was computed during the encoding stage.
 This eliminates the problem of learning long range dependencies.
 
-The Transformer network tries to take advantage of the attention mechanism while ditching the recurrence of RNNs to achieve faster training and allowing for more parallelization.
+The Transformer network tries to take advantage of the attention mechanism while ditching the recurrence of RNNs to achieve faster training and allow for more parallelization.
 
 \subsection{Model Architecture}\label{ssec:transformer-model-architecture}
 
