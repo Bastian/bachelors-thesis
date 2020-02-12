@@ -28,7 +28,7 @@ While the sequence elements are passed through the RNN, a hidden state gets comp
 This process is called encoding.
 Afterwards, the last hidden state of the econding process is used as an input for the first step of the decoding process.
 Because of this, it is not possible to parallelize the training within a training example, as the hidden state of the previous step is needed to calculate the output of the current step. \cite[p.~2]{1706.03762}
-A simplified RNN for sequence-to-sequence tasks like machine translation is shown in \autoref{fig:rnn-visualization}.
+A simplified RNN for sequence-to-sequence tasks like machine translation is shown in \cref{fig:rnn-visualization}.
 
 \begin{figure}[h]
 \centering
@@ -69,7 +69,7 @@ The new sub-layer is able to attend to the output of the encoder.
 The multi-head self-attention sub-layer is masked, to prevent it from attending to future words. \cite[p.~3]{1706.03762}.
 
 In the original Transformer, $N = 6$ stacked encoder and decoder layers are used.
-The complete architecture of the Transformer is visualized in \autoref{fig:transformer-model}.
+The complete architecture of the Transformer is visualized in \cref{fig:transformer-model}.
 
 The inputs are simple learned embedding vectors of dimension $d_{model}$ that are concatenated with a fixed positional embedding \cite[p.~5--6]{1706.03762}.
 This fixed input embeddings encode the position of the sequence elements, as this information is otherwise no longer accessible to the network because of the missing recurrence.
@@ -80,7 +80,7 @@ The positional encoding is calculated with sine and cosine functions of differen
 \end{align*}
 
 This encoding allows the network to obtain information about the absolute and relative position of each element.
-\autoref{fig:positional-encoding-sine-cosine} visualizes the embedding for some dimensions.
+\Cref{fig:positional-encoding-sine-cosine} visualizes the embedding for some dimensions.
 It is clearly visible how each position has a different embedding.
 
 For the outputs, a learned linear transformation and a softmax function are used to generate next-token probabilities \cite[p.~5]{1706.03762}.
@@ -117,11 +117,11 @@ Unlike normal attention, the Transformer uses "Multi-Head Attention".
 Instead of having a single attention function, the queries, keys and values are linearly projected with learned linear projections \cite[p.~4--5]{1706.03762}.
 After performing the attention function on the projected matrices, they are concatenated and projected again.
 The dimension of each learned linear projection is the model's dimension $d_{model}$ divided by the amount of attention layers $h$.
-\autoref{fig:scaled-dot-product-multihead-attention} visualizes both the "Scaled Dot-Product Attention" (left) as well as the "Multi-Head Attention" (right).
+\Cref{fig:scaled-dot-product-multihead-attention} visualizes both the "Scaled Dot-Product Attention" (left) as well as the "Multi-Head Attention" (right).
 
 \subsection{Advantages}
 
-As described in \autoref{ssec:transformer-motivation}, the Transformer allows for significant more parallelization than RNNs, because of the absence of sequential behavior within one training example.
+As described in \cref{ssec:transformer-motivation}, the Transformer allows for significant more parallelization than RNNs, because of the absence of sequential behavior within one training example.
 This yields in much faster and less expensive training, compared to previous state-of-the-art models for machine translation.
 The big Transformer model is trained for 3.5 days on 8 P100 GPUs and the base Transformer model for just 12 hours \cite[p.~7]{1706.03762}. 
 For comparison, the first RNN network to utilize attention took between 109 and 252 hours for training \cite[p.~14]{1409.0473}.
@@ -165,11 +165,11 @@ For example, when having a sentence that starts with "The lighter", the network 
 However, the word can have completely different meanings, depending on the whole sentence, e.g. "The lighter is an easy tool to make fire" compared to "The lighter shade of red looks better than the darker one". 
 ELMo tries to compensate this issue by training two LSTMs with one being a normal forward LSTM (left-to-right) and the other one being a backward LSTM (right-to-left) which is given the input sequence in reverse \cite[p.~2--3]{1802.05365}.
 Afterwards, it concatenates the representations of these two LSTMs to get a semi-bidirectional representation.
-\autoref{fig:bert-gpt2-elmo-model-comparison} visualizes the different architectures.
+\Cref{fig:bert-gpt2-elmo-model-comparison} visualizes the different architectures.
 
 \subsection{Model Architecture}
 
-At its core, BERT is just a Transformer decoder, as described in \autoref{ssec:transformer-model-architecture}.
+At its core, BERT is just a Transformer decoder, as described in \cref{ssec:transformer-model-architecture}.
 
 \subsubsection{Input and Output Representations}
 
@@ -181,7 +181,7 @@ Additionally to the token embeddings, the input consists of two more types of em
 The first one are a learned segment embeddings, that indicates if a token belongs to the first or the second token.
 The second one are position embeddings, that help the network to understand the positions of each token in the sequence.
 Unlike the original Transformer, BERT does not use fixed posisional embeddings, but learned ones.
-Finally, these three embeddings are concatendated to form the actual input for the network as shown in \autoref{fig:bert-input-representation}.
+Finally, these three embeddings are concatendated to form the actual input for the network as shown in \cref{fig:bert-input-representation}.
 
 \begin{figure}[h]
 \centering
@@ -200,25 +200,31 @@ For the simpler extractive summarization task, which is basically some kind of s
 
 BERT is pre-trained with two different tasks \cite[p.~4--5]{devlin2018bert}.
 For the first task, the network is given a sentence with 15\% of its word piece tokens b randomly masked.
-An example for masking is shown in \autoref{bert_masking_example}.
+An example for masking is shown in \cref{fig:bert_masking_example}.
 
 % TODO Exact source is https://github.com/google-research/bert#what-is-bert
 % TODO I need to ask my prof if the current mentioning of the GitHub page is enough
-\begin{lstlisting}[caption={Masked input example. Taken from the BERT GitHub page.},captionpos=b,numbers=none,label=bert_masking_example]
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
 Input: the man went to the [MASK1] . he bought a [MASK2] of milk.
 Labels: [MASK1] = store; [MASK2] = gallon
 \end{lstlisting}
+\caption[Masked input example]{Masked input example. Taken from the BERT GitHub page.}
+\label{fig:bert_masking_example}
+\end{figure}
+
 
 The task of the network is, to predict the masked tokens.
 This task allows the network to take the context of a word into consideration.
 
 For the second task, the network is given two sentences.
 The network then has to predict, if the second of these two sentences comes after the first one in the original text or if it is just a randomly selected sentence from any other text.
-An example for next sentence prediction is shown in \autoref{bert_next_sentence_example}.
+An example for next sentence prediction is shown in \cref{fig:bert_next_sentence_example}.
 
 % TODO Exact source is https://github.com/google-research/bert#what-is-bert
 % TODO I need to ask my prof if the current mentioning of the GitHub page is enough
-\begin{lstlisting}[caption={Next sentence prediction example. Taken from the BERT GitHub page.},captionpos=b,numbers=none,label=bert_next_sentence_example]
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
 Sentence A: the man went to the store .
 Sentence B: he bought a gallon of milk .
 Label: IsNextSentence
@@ -227,6 +233,9 @@ Sentence A: the man went to the store .
 Sentence B: penguins are flightless .
 Label: NotNextSentence
 \end{lstlisting}
+\caption[Next sentence prediction example]{Next sentence prediction example. Taken from the BERT GitHub page.}
+\label{fig:bert_next_sentence_example}
+\end{figure}
 
 Ideally, this helps the network to understand the relationship between two sentences.
 However, this task has been shown to be too simple for the network, as it is easier for it to just learn if the topics of two sentences match instead of understanding the real relationship of the sentences.
