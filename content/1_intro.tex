@@ -26,20 +26,21 @@ As BERT's pre-training sequence length of 512 \cite[p.~13]{devlin2018bert} is wa
 \section{Method}
 
 As part of this work, a network is developed that uses BERT.
-It is trained with data from the two most commonly used meeting corpora, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin} that are described in \autoref{ch:used-corpora}.
+It is trained with data from the two most commonly used meeting corpora, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin} that are described in \autoref{ch:data}.
 Cross-corpus validation\footnote{\Eg training on the ICSI corpus and testing on the AMI corpus} is performed to evaluate if the network is able to generalize what it learned.
 
 % =================
-% STRUCTURE OF THE WORK
+% THESIS OUTLINE
 % =================
 
-\section{Structure of the work}
+\section{Thesis Outline}
 
-Chapter \ref{ch:theoretical-foundation} explains the theoretical foundation that is necessary for this work.
-Chapter \ref{ch:used-corpora} introduces the two used meeting corpora.
-Chapter \ref{ch:concept} explains the concept of the model that this works uses.
-It will also present how the model is trained.
-Chapter \ref{ch:implementation} focuses on the implementation if the model and how the training data is processed.
-Chapter \ref{ch:results} presents the results. It shows both the archived scores and provide some hand-picked example outputs.
-Chapter \ref{ch:outlook} gives an outlook for possible future research.
-Finally, chapter \ref{ch:summary-and-conclusion} summarizes the results of the work and draws a conclusion how they can be interpreted.
+\autoref{ch:data} introduces the two used meeting corpora which are used to train the network.
+\autoref{ch:theoretical-foundations} explains the theoretical foundations that are necessary for this work.
+\autoref{ch:system-description} describes the model architecture of the network used in this thesis.
+It also explains, how the network was trained and what steps were performed to prepare the training data.
+Additionally, it focuses on the actual implementation with the Texar library \cite{hu2019texar} and what hyperparameters where used for training.
+\autoref{ch:experiments} presents the experiments that were performed on the network and what scores it archived. I
+It also provides some hand-picked example outputs.
+\autoref{ch:outlook} gives an outlook for possible future research.
+Finally, \autoref{ch:summary-and-conclusion} summarizes the results of the work and draws a conclusion how they can be interpreted.
