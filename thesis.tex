@@ -92,7 +92,6 @@
     noabbrev,
 ]{cleveref} % cleveref, because hyperref has some missing features (e.g. \autoref not being uppercase at the beginning of a sentence) 
 
-
 % configure your listings style
 \usepackage{listings}
 \lstset{
@@ -102,8 +101,10 @@
 	showstringspaces=true,
 	numbers=left,
 	numberstyle=\small,
-	breakautoindent=true
+	breakautoindent=true,
 }
+\crefname{lstlisting}{listing}{listings}
+\Crefname{lstlisting}{Listing}{Listings}
 
 % page setup
 % \setlength{\topskip}{\ht\strutbox}
