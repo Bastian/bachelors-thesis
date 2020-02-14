@@ -57,7 +57,7 @@ This subsection desrcribes how the training data is processed.
 \paragraph{Format of the Corpus Data}
 
 The corpus data for both the AMI Meeting Corpus and the ICSI Meeting Corpus is available in the NITE XML Toolkit (NXT) format \cite{Carletta2003}.
-For automatic parsing, a Java library is available, that makes it possible to write a Java program that traversed through the data and collects the necessary data.
+For automatic parsing, a Java library is available, that makes it possible to write a Java program that traverses through the data and collects the necessary data.
 For this work, such a program was developed.
 It parses the data from the corpora and creates three tab-sepreated-values (.tsv) files, one for each dataset (training, development, test).
 
@@ -137,7 +137,7 @@ The learning rate is computed by the following formula:
 	learning\_rate = 0.2 \cdot d_{model}^{-0.5} \cdot min(step\_num^{-0.5}, step\_num \cdot warmup\_steps^{-1.5})
 \]
 which is equivalent to the learning rate used to train the original Transformer \cite[p.~7]{1706.03762}, but multiplied by $0.2$ as this yields better results for this training data as shown be empirical testing.
-The warmup steps were set to $warmup\_steps = 4000$.
+The warmup steps are set to $warmup\_steps = 4000$.
 The formal can be interpreted as linearly increasing the learning rate until $warmup\_steps < steps$ and then steadily decreasing it again.
 The function's graph is visualized in \cref{fig:learning-rate}.
 
@@ -151,6 +151,10 @@ For the experiments performed in this thesis, the following values proofed to be
 \end{itemize}
 
 Smaller batch sizes harm the networks performance and smaller maximum sequence lengths mean lost information, as some of the inputs are quite long and would be truncated.
+
+\paragraph{BERT}
+
+Due to the same memory constrains mentioned in the previous paragraph, the smaller BERT model BERT\textsubscript{BASE} is used.
 
 \paragraph{Transformer decoder}
 
