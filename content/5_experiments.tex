@@ -1,19 +1,89 @@
 \chapter{Experiments}\label{ch:experiments}
 
-\Blindtext
-
 % ==============
 % INITIAL EXPERIMENTS
 % ==============
 
 \section{Initial Experiments}
 
-\Blindtext
+% TODO insert real data
+\begin{table}[h]
+\centering
+\begin{tabular}{c|l|clll}
+\textbf{Variant}              & \textbf{Training Steps}                                                                   & \textbf{Metric} & \textbf{Pre} & \textbf{Rec} & \textbf{F} \\ \hline
+\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{AAI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{IAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{III}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{CCC}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\end{tabular}
+\caption{Rouge Scores of the first experiment}
+\label{tab:initial-experiment-rouge}
+\end{table}
+
+For the first experiments, the network is trained to summarize $n$ dialogue acts to $1$ sentence of a meeting's abstract.
+Results for the following combinations are reported:
+
+\begin{itemize}
+\item Trained on the AMI train data set, validated on the AMI eval data set, tested on the AMI test data set (\textbf{AAA})
+\item Trained on the AMI train data set, validated on the AMI eval data set, tested on the ICSI corpus (\textbf{AAI})
+\item Trained on the ICSI corpus, validated on the AMI eval data set, tested on the AMI test data set (\textbf{IAA})
+\item Trained, validated and tested on the ICSI corpus, using a 70/15/15 split (\textbf{III})
+\item Trained, validated and tested on a combined AMI and ICSI corpus, using a 70/15/15 split (\textbf{CCC})
+\end{itemize}
+
+
+Training took on average less than one hour on a single RTX 2080 Ti GPU.
+The achieved ROUGE scores are shown in \cref{tab:initial-experiment-rouge}.
+While the results for AAA, III, CCC are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
+
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
+DA: [CLS] yeah. let's drop the speech. [SEP]
+HS: the remote will no longer feature speech recognition, but will
+    still have an lcd screen.
+GS: the remote will not contain a speech recognition.
+------------------------------------------------------------------
+DA: [CLS] yeah, i have still ten minutes to finish the 
+    report. [SEP]
+HS: the project manager will complete the final report.
+GS: the project manager will create a final report.
+\end{lstlisting}
+\caption{Comparison between human summary (HS) and machine generated summary (GS) of dialogue acts (DA) for variant AAA.}
+\label{fig:initial-experiment-example}
+\end{figure}
+
+\Cref{fig:initial-experiment-example} shows two hand-picked examples of generated summaries, together with the input and the human summary.
+It is easily visible, that the network tends to overfit the data, as the generated summary contains information that is not part of the actual input, but can only be guessed if the settings of AMI's scenario meeting is taken into account\footnote{E.g. that the final report is always written by the project manager}.
+This also explains the bad results for the AAI and IAA variations, as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
+
+However, the network is able to correctly interpret the context of a sentence and is to a certain degree able to generate new sentences.
+The generated summary from the first example is not present in the training data at all, but constructed from multiple different sentences.
+The generated summary from the second example is identically to a human summary\footnote{Besides a missing point at the end of the sentence} that was used for training, but for another input.
+This human summary with the matching dialogue act is shown in \cref{fig:initial-experiment-training-example}.
+
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
+DA: [CLS] because uh i have to write the final report now.
+HS: the project manager will create a final report 
+\end{lstlisting}
+\caption{The training example, which summary the network copied in the second example of \cref{fig:initial-experiment-example}.}
+\label{fig:initial-experiment-training-example}
+\end{figure}
+
 
 % ================
 % EXTENDED EXPERIMENTS
 % ================
 
 \section{Extended Experiments}
-
-\Blindtext
