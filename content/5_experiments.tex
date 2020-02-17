@@ -4,30 +4,30 @@
 % INITIAL EXPERIMENTS
 % ==============
 
-\section{Initial Experiments}
+\section{Initial Experiments}\label{sec:initial-experiments}
 
 % TODO insert real data
 \begin{table}[h]
 \centering
 \begin{tabular}{c|l|clll}
 \textbf{Variant}              & \textbf{Training Steps}                                                                   & \textbf{Metric} & \textbf{Pre} & \textbf{Rec} & \textbf{F} \\ \hline
-\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{AAI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{IAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{III}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{CCC}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}} & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                           & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}8620 steps\\ (approx. 141 epochs)\end{tabular}} & \textbf{R-1}    & 0.3849       & 0.2952       & 0.3192     \\
+                              &                                                                                            & \textbf{R-2}    & 0.1718       & 0.1351       & 0.1428     \\
+                              &                                                                                            & \textbf{R-L}    & 0.3489       & 0.2701       & 0.2687     \\ \hline
+\multirow{3}{*}{\textbf{AAI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{IAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{III}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{CCC}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
+                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
 \end{tabular}
-\caption{Rouge Scores of the first experiment}
+\caption{Rouge scores of the initial experiments}
 \label{tab:initial-experiment-rouge}
 \end{table}
 
@@ -54,10 +54,10 @@ HS: the remote will no longer feature speech recognition, but will
     still have an lcd screen.
 GS: the remote will not contain a speech recognition.
 ------------------------------------------------------------------
-DA: [CLS] yeah, i have still ten minutes to finish the 
-    report. [SEP]
-HS: the project manager will complete the final report.
-GS: the project manager will create a final report.
+DA: [CLS] that's that's what i'm gonna write b between now. i'm
+    going to finish my end report. [SEP]
+HS: the project manager will finish the final report.
+MS: the project manager will create a final report
 \end{lstlisting}
 \caption{Comparison between human summary (HS) and machine generated summary (GS) of dialogue acts (DA) for variant AAA.}
 \label{fig:initial-experiment-example}
@@ -69,21 +69,39 @@ This also explains the bad results for the AAI and IAA variations, as the networ
 
 However, the network is able to correctly interpret the context of a sentence and is to a certain degree able to generate new sentences.
 The generated summary from the first example is not present in the training data at all, but constructed from multiple different sentences.
-The generated summary from the second example is identically to a human summary\footnote{Besides a missing point at the end of the sentence} that was used for training, but for another input.
+The generated summary from the second example is identically to a human summary that was used for training, but for another input.
 This human summary with the matching dialogue act is shown in \cref{fig:initial-experiment-training-example}.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
-DA: [CLS] because uh i have to write the final report now.
-HS: the project manager will create a final report 
+DA: because I have to write the final report now.
+HS: The project manager will create a final report
 \end{lstlisting}
 \caption{The training example, which summary the network copied in the second example of \cref{fig:initial-experiment-example}.}
 \label{fig:initial-experiment-training-example}
 \end{figure}
-
 
 % ================
 % EXTENDED EXPERIMENTS
 % ================
 
 \section{Extended Experiments}
+
+% TODO Insert real values
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Metric} & \multicolumn{1}{c}{\textbf{Pre}} & \multicolumn{1}{c}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{F}} \\ \midrule
+\textbf{R-1}    & 0.01                             & 0.02                             & 0.03                           \\
+\textbf{R-2}    & 0.02                             & 0.03                             & 0.04                           \\
+\textbf{R-L}    & 0.03                             & 0.04                             & 0.05                           \\ \bottomrule
+\end{tabular}
+\caption{Rouge scores of the extended experiments}
+\label{tab:extended-experiment-rouge}
+\end{table}
+
+For the extended experiments, the topic segmentation described in \cref{ssec:ami-topic-segmentation} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
+This results in one summary sentence for each topic of a meeting.
+By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
+For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus}, as there is no manual topic segmentation available for the ICSI Meeting Corpus.
