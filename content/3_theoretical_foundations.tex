@@ -1,14 +1,45 @@
 \chapter{Theoretical Foundations}\label{ch:theoretical-foundations}
 
-\Blindtext
-
 % ===============
 % LEARNING FROM DATA
 % ===============
 
 \section{Learning from Data}
 
-\Blindtext
+\subsection{Supervised vs Unsupervised Training}
+
+TODO
+
+\subsection{Backpropagation}
+
+TODO
+
+\subsection{Optimizer and Learning Rate}
+
+TODO
+
+\subsection{Automatic Evaluation}
+
+Evaluating summaries is essential for multiple reasons, \eg to monitor progress during training or to compare own results to results from other researchers.
+While human evaluation seems like an obvious approach, it is usually not feasible as it is slow, expensive and results from different people are not always comparable.
+The more common approach is automatic evaluation.
+To automatically evaluate summaries, ROUGE (Recall-Oriented Understudy for Gisting Evaluation) \cite{lin-2004-rouge} is widely adapted, as it tends to correlate well with human judgments.
+ROUGE supports multiple evaluation metrics.
+To report the results achieved in this thesis, the following three metrics are used:
+\begin{itemize}
+\item \textbf{ROUGE-1} which calculates the overlap of single words (unigrams) between the candidate summary and the reference summary. 
+\item \textbf{ROUGE-2} which is similar to ROUGE-1, but instead of using the overlap of single words, it uses word pairs of 2 (bigram).
+\item \textbf{ROUGE-SU4} which uses a combination of unigram overlap and skip-4gram overlap.
+A skip-4gram is an ordered pair of 4 words, ignoring any gaps between the words.
+\end{itemize}
+
+When comparing word overlap, one has to differentiate between recall and precision \cite{Ting2010}.
+While recall indicates, how much information of the reference summary is present in the candidate summary, precision indicates how much of the information in the candidate summary is actually present in the reference summary.
+It is common to combine these two measures to a single one, that is called F1-measure.
+It is calculated by the following formular:
+\[
+	F_1 = 2 \cdot \frac{Recall \cdot Precision}{Recall + Precision}
+\]
 
 % ==========
 % TRANSFORMER
@@ -105,12 +136,9 @@ The Transformer attention consists of query, key and value vectors.
 The query vectors are used to select values by their corresponding keys.
 The Transformer implements this as a "Scaled Dot-Product Attention" where queries and key have the dimension $d_k$ and the values the dimension $d_v$.
 To calculate the attention, the following formula is used:
-
-
 \[
 	\textrm{Attention}(Q,K,V) = \textrm{softmax}(\dfrac{QK^T}{\sqrt{d_k}})V
 \]
-
 where the matrices $Q$, $K$ and $V$ contain multiple sets of queries, keys and values \cite[p.~3--4]{1706.03762}.
 
 Unlike normal attention, the Transformer uses "Multi-Head Attention".
