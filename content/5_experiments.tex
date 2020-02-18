@@ -42,17 +42,22 @@ Results for the following combinations are reported:
 \item Trained, validated and tested on a combined AMI and ICSI corpus, using a 70/15/15 split (\textbf{CCC})
 \end{itemize}
 
-
 Training took on average less than one hour on a single RTX 2080 Ti GPU.
 The achieved ROUGE scores are shown in \cref{tab:initial-experiment-rouge}.
 While the results for AAA, III, CCC are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
-DA: [CLS] yeah. let's drop the speech. [SEP]
-HS: the remote will no longer feature speech recognition, but will
-    still have an lcd screen.
-GS: the remote will not contain a speech recognition.
+DA: [CLS] and lea l delivered standard with a fruity colour, but
+    not too not too much. but, the mai i think th the standard
+    must be some kind of attractive flashy colours. so i think it
+    will be a better idea to have some flashy fruity colours as as
+    a standard, and for the people who really want a more
+    sophisticated, more traditional look, they're willing to pay
+    that. [SEP]
+HS: the remote will come in fruity colours as standard with the
+    option of buying different exchangeable covers.
+GS: the remote will be made of fruity colors.
 ------------------------------------------------------------------
 DA: [CLS] that's that's what i'm gonna write b between now. i'm
     going to finish my end report. [SEP]
@@ -71,6 +76,7 @@ However, the network is able to correctly interpret the context of a sentence an
 The generated summary from the first example is not present in the training data at all, but constructed from multiple different sentences.
 The generated summary from the second example is identically to a human summary that was used for training, but for another input.
 This human summary with the matching dialogue act is shown in \cref{fig:initial-experiment-training-example}.
+Unfortunately, the second example is the much more common case and the network does not generate new sentences very often, but only copies them from the training examples.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
@@ -93,15 +99,82 @@ HS: The project manager will create a final report
 \begin{tabular}{@{}clll@{}}
 \toprule
 \textbf{Metric} & \multicolumn{1}{c}{\textbf{Pre}} & \multicolumn{1}{c}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{F}} \\ \midrule
-\textbf{R-1}    & 0.01                             & 0.02                             & 0.03                           \\
-\textbf{R-2}    & 0.02                             & 0.03                             & 0.04                           \\
-\textbf{R-L}    & 0.03                             & 0.04                             & 0.05                           \\ \bottomrule
+\textbf{R-1}    & 0.3665                           & 0.3260                           & 0.3354                         \\
+\textbf{R-2}    & 0.1368                           & 0.1302                           & 0.1290                         \\
+\textbf{R-L}    & 0.3388                           & 0.3014                           & 0.2944                         \\ \bottomrule
 \end{tabular}
 \caption{Rouge scores of the extended experiments}
 \label{tab:extended-experiment-rouge}
 \end{table}
 
-For the extended experiments, the topic segmentation described in \cref{ssec:ami-topic-segmentation} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
+For the extended experiments, the topic segmentation described in \cref{ssec:ami-annotations} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
 This results in one summary sentence for each topic of a meeting.
 By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
 For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus}, as there is no manual topic segmentation available for the ICSI Meeting Corpus.
+
+The achived ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
+An example for a generated summary is shown in \cref{fig:extended-experiment-example}.
+
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
+the project manager gave an introduction to the goal of the
+project, to create a trendy yet user-friendly remote. she
+presented a long-range agenda for the whole project. the group
+introduced themselves to each other and practiced with the meeting
+room tools by drawing on the board. the project manager presented
+the project budget, the projected price point, and the projected
+profit aim for the project. then the group began a discussion
+about their own experiences with remote controls to generate
+initial design ideas for making the product user-friendly. they
+discussed grouping features into a menu and adding an lcd display.
+they also discussed the look of various materials that may be used 
+n the design, in keeping with the company's goal to create
+fashionable electronics. 
+------------------------------------------------------------------
+the group discussed making the remote universally compatible and
+ergonomic design. the project manager states that the remote needs
+to be original, trendy, and user - friendly. the team members then
+participated in an exercise in which they drew their favorite
+animals. the project manager discussed the financial goals of the
+project, including the projected profit aim and price point for
+the device. the team then discussed their experiences using
+remotes in the past and what features to consider implementing in
+the remote. the project manager closes the meeting. the marketing
+expert discussed his findings from trend watching reports. the
+project manager closed the meeting. 
+\end{lstlisting}
+\caption{Comparison of human summary (top) with machine generated summary (bottom).}
+\label{fig:extended-experiment-example}
+\end{figure}
+
+\paragraph{Comparison With Other Approaches}
+
+When just looking the the plain ROUGE scores, the neural approach outperforms any of the existing attempts for abstractive meeting summarization, like \cite{oya-etal-2014-template}, \cite{1609.07035} or \cite{shang-etal-2018-unsupervised}.
+However, this comparison is not fair, as their approaches do only use the dialoge acts or transcripts to generate their summaries.
+While this is also true for the model of this work, it had access to the abstractive summaries of the training set during its training.
+Because all of AMI's scenario meetings have a very similar structure, the abstracts in the training data tend to be very similar to the abstracts in the test data set.
+This gives the network an unfair advantage over the other approaches and makes the results hardly comparable.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Metric} & \multicolumn{1}{c}{\textbf{Pre}} & \multicolumn{1}{c}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{F}} \\ \midrule
+\textbf{R-1}    & 0.2625                           & 0.3264                           & 0.2832                         \\
+\textbf{R-2}    & 0.0788                           & 0.0992                           & 0.0848                         \\
+\textbf{R-L}    & 0.2384                           & 0.2957                           & 0.2440                         \\ \bottomrule
+\end{tabular}
+\caption{Rouge scores of random baseline}
+\label{tab:extended-experiment-rouge-random}
+\end{table}
+
+To have a baseline that results can be compared to, one can just randomly pick a summary sentence from the training data for every topic.
+If the network is able to understand the meaning of its input, it should outperform this baseline.
+When comparing the network's scores shown in \cref{tab:extended-experiment-rouge} with this random baseline shown in \cref{tab:extended-experiment-rouge-random}, the results of the network indeed outperform the baseline by a significant margin.
+
+\paragraph{Issues with the generated summary}
+
+The generated summaries come with some issues, that are not visible when just looking at the ROUGE scores.
+One example are duplicate sentences, or sentences that carry the same meaning, like the two sentences "the project manager closes the meeting." and "the project manager closed the meeting." that are both part of the same summary shown in \cref{fig:extended-experiment-example}.
+While this issue could be solved by some clever duplicate filtering, a more severe issue is wrong information in the summaries.
+E.g. the sentence "the marketing expert discussed his findings from trend watching reports" is incorrect for the meeting from \cref{fig:extended-experiment-example}.

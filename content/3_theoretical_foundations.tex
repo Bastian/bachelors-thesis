@@ -163,7 +163,7 @@ For the outputs, a learned linear transformation and a softmax function are used
 \label{fig:positional-encoding-sine-cosine}
 \end{figure}
 
-\subsubsection{Attention}
+\paragraph{Attention}
 
 \begin{figure}[h]
 \centering
@@ -239,7 +239,7 @@ Afterwards, it concatenates the representations of these two LSTMs to get a semi
 
 At its core, BERT is just a Transformer decoder, as described in \cref{ssec:transformer-model-architecture}.
 
-\subsubsection{Input and Output Representations}
+\paragraph{Input and Output Representations}
 
 BERT's input tries to be applicable for many different natural language processing tasks.
 It allows the inputs of either one sentence or a pair of two sentences, with sentences refering to ``an arbitrary span of contiguous text, rather than an actual linguistic sentence'' \cite[p.~4]{devlin2018bert}.
@@ -264,7 +264,7 @@ This work uses the final hidden states for every single input token, as the Deco
 For the simpler extractive summarization task, which is basically some kind of sentence classification in which each sentence is either classified as \texttt{"include in summary"} or \texttt{"do not include in summary"}, it can be sufficient to only use the final hidden state of the \texttt{[CLS]} token. 
 \cite{1903.10318} proposes a small input variation for BERT, that inserts multiple \texttt{[CLS]} tokens into the input sequence to later use them for extractive summarization.
 
-\subsubsection{Pre-Training Objectives}
+\paragraph{Pre-Training Objectives}
 
 BERT is pre-trained with two different tasks \cite[p.~4--5]{devlin2018bert}.
 For the first task, the network is given a sentence with 15\% of its word piece tokens b randomly masked.
@@ -313,7 +313,7 @@ Pre-training is usually very expensive.
 The training was performed for 4 days on 4 Cloud TPUs for BERT\textsubscript{BASE} and 16 Cloud TPUs for the larger model BERT\textsubscript{LARGE} with each Cloud TPU having 4 TPU chips \cite[p.~13]{devlin2018bert}.
 However, it is only necessary to do pre-training once.
 
-\subsubsection{Fine-Tuning}
+\paragraph{Fine-Tuning}
 
 After the unsupervised pre-training, the network can be fine-tuned for a specific task.
 Fine-Tuning is far less expensive than pre-training and can usually be done in less than 1 hour on a single Cloud TPU, or a few hours on a normal GPU \cite[p.~5]{devlin2018bert}.

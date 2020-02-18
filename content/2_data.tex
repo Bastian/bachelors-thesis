@@ -39,11 +39,11 @@ Before each meetings, the participants perform individual work.
 
 In total, data for 35 of these projects is available, each with the 4 meetings. \cite[p.~2]{Mccowan05theami}
 
-\subsection{Annotations}
+\subsection{Annotations}\label{ssec:ami-annotations}
 
 The following annotations are available and used in this work:
 
-\subsubsection{Dialogue Acts}
+\paragraph{Dialogue Acts}
 
 The transcription of the whole meeting is split into smaller pieces on a per-person basis.
 These subsets of the transcription are called "Dialogue Acts".
@@ -51,13 +51,13 @@ A dialogue act tries to group word, that belong together to form a speaker's att
 Every word of the transcription is part of exactly one dialogue act.
 Each dialogue act is classified by its content, but this classification is not used in this work. \cite{amiWebsite}
 
-\subsubsection{Topic Segmentation}
+\paragraph{Topic Segmentation}
 
 Each meeting is split into multiple topics that by themselves may be split into subtopics.
 Examples for topics are "industrial designer presentation", "evaluation of prototype" or "project specs and roles of
 participants" to name a few. \cite{amiWebsite}
 
-\subsubsection{Abstractive Summaries}
+\paragraph{Abstractive Summaries}
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
@@ -108,16 +108,20 @@ For the scenario meetings, the data distribution is shown in \cref{tab:meeting-t
 
 The ICSI Meeting Corpus, that contains meetings that were collected at the International Computer Science Institute (ICSI) over a period of three years.
 It contains about 72 hours of meeting data. \cite{Janin}
-As it has a very similar structure than the AMI Meeting corpus described in \cref{sec:ami-meeting-corpus}, this chapter will only focus on their differences.
+As it has a very similar structure than the AMI Meeting corpus described in \cref{sec:ami-meeting-corpus}, this chapter will only focus on their differences that are relevant for this work.
 
-\subsection{Scenario}
+\paragraph{Scenario}
 
 Unlike the scenario meetings of the AMI Meeting Corpus, the ICSI Meeting Corpus are natural meetings that do not have a specific topic.
 However, as the meetings are all recorded at the ICSI, they usually follow a specific type.
 Because of this, every meeting of the corpus is classified as on one of 5 different meeting types. \cite{Janin}
 % TODO Maybe name/describe the 5 types of meetings. But as they are not really important, I will omit them for now...
 
-\subsection{Segmentation of the Corpus}\label{ssec:icsi-segmentation-of-the-corpus}
+\paragraph{Topic Segmentation Annotation}
+
+For ICSI, only automatic topic segmentation is available, but no manual segmentation like for AMI.
+
+\paragraph{Segmentation of the Corpus}
 
 Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development and test sets.
 Because of this missing split, this work will mainly work with the AMI Meeting Corpus and only use the ICSI Meeting Corpus for cross-corpus-validation.
