@@ -6,17 +6,57 @@
 
 \section{Learning from Data}
 
-\subsection{Supervised vs Unsupervised Training}
+\subsection{Labeled and Unlabeled Data}
 
-TODO
+When learning from data, the data is usually either labeled or unlabeled.
+An example for labeled data can be images with a caption, where the image itself is the data and the caption is the label.
+For abstractive summarization tasks, data is usually labeled, with the source text being the data and the summary of this text the label.
+Unlabeled data can be any data, such as plain images or texts.
+Unlike labeled data, the amount of unlabeled data is usually much higher, as labeling data is an expensive manual process while unlabeled data is usually produced as a by-product.
 
-\subsection{Backpropagation}
+%TODO Quelle?
 
-TODO
+\subsection{Neural Networks}
 
-\subsection{Optimizer and Learning Rate}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\paperwidth]{figures/neural-network}
+\caption{Simple feed-forward neural network with 2 hidden layers.}
+\label{fig:neural-network}
+\end{figure}
 
-TODO
+Nowadays, artificial neural networks are a very common way to learn from data.
+A neural network consists of neurons, that are inspired by real brain neurons, and connection between these neurons.
+Each neuron can be seen as a function that takes the values of all its predecessor nodes as input and outputs a values, that by itself is used as the input for its successor nodes.
+To compute a node's output, the value $x \in X$ of every predecessor node is multiplied with a weight $w \in W$.
+Then, a constant bias $b$ is added to the sum of these multiplications and finally, an activation function $\Phi$ is applied to this sum:
+\[
+	y = \Phi(\sum_{i=0}^{d}x_iw_i + b)
+\]
+With $d$ being the amount of predecessor nodes and $y$ being the node's output.
+The activation function $\Phi$ usually is a nonlinear function, that maps its input to values between $-1$ and $1$ or $0$ and $1$.
+\cite[p.~4--13]{Aggarwal2018}
+
+\paragraph{Feed-Forward Networks}
+
+One of the simplest and most common neural networks is the feed-forward network.
+Such a network consists of multiple layers, where neurons only have predecessors in the previous layer and successors in the next layer.
+The first layer with no predecessors is called the input layer, as here the actual input for the neural network is used as the node's values.
+The last layer with no successors is called the output layer.
+The values of the nodes in the output layer are used as the output of the whole network.
+Every layer in between these two layers is called a hidden layer.
+Such a network is shown in \cref{fig:neural-network}.
+\cite[p.~17--20]{Aggarwal2018}
+
+\paragraph{Backpropagation}
+
+When training a network, the goal is to adjust all the weights and biases in a way, that the error of the neural network is minimized.
+This error is measured with a loss function that computes how different the output of the network for the training data is, compared to the desired output (the labels).
+Backpropagation is an algorithm that computes, how the weights and biases should be adjusted.
+The backpropagation algorithm consists of two phases: In the forward phase, a portion (batch) of the training data is fed into the network and the loss is computed.
+In the backward phase, the gradients of the loss function is computed and then these gradients are used to update the weights of the network.
+This processes is repeated multiple times.
+\cite[p.~21--24]{Aggarwal2018}
 
 \subsection{Automatic Evaluation}
 
@@ -36,7 +76,7 @@ A skip-4gram is an ordered pair of 4 words, ignoring any gaps between the words.
 When comparing word overlap, one has to differentiate between recall and precision \cite{Ting2010}.
 While recall indicates, how much information of the reference summary is present in the candidate summary, precision indicates how much of the information in the candidate summary is actually present in the reference summary.
 It is common to combine these two measures to a single one, that is called F1-measure.
-It is calculated by the following formular:
+It is calculated by the following formula:
 \[
 	F_1 = 2 \cdot \frac{Recall \cdot Precision}{Recall + Precision}
 \]
