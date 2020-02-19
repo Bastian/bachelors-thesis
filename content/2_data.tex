@@ -75,25 +75,25 @@ S3: The team then discussed various features to consider in making
 \end{figure}
 
 For each meeting, abstractive summaries are available.
-Each abstractive summary consists of an abstract, decisions, problems/issues and actions, but this work is only using the abstract.
+Each abstractive summary consists of an abstract, decisions, problems/issues and actions.
 Usually, the abstract consists of multiple sentences.
 An example for such an abstract with 3 sentences is shown in \cref{fig:abstractive-summary-example}.
 
 Additionally, for each sentence of the abstractive summary, one or more dialogue acts are selected, that are linked together.
-This mapping of $n$ dialogue acts to $1$ sentence of the summary is later used for training, as described in \label{sec:concept-training} in more detail. \cite{amiWebsite}
+This mapping of $n$ dialogue acts to $1$ sentence of the summary is later used for training, as described in \cref{sec:system-description-training} in more detail. \cite{amiWebsite}
 
 \subsection{Segmentation of the Corpus}\label{ssec:ami-segmentation-of-the-corpus}
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lll@{}}
 \toprule
-\multicolumn{1}{c}{Set} & \multicolumn{1}{c}{Time} \\ \midrule
-Training & $\sim$50 hours \\
-Development & $\sim$11 hours \\
-Test & $\sim$11 hours \\ \bottomrule
+\multicolumn{1}{c}{\textbf{Set}} & \multicolumn{1}{c}{\textbf{Time}} & \textbf{Size} \\ \midrule
+Training                         & approx. 50 hours                  & 98 meetings   \\
+Development                      & approx. 11 hours                  & 20 meetings   \\
+Test                             & approx. 11 hours                  & 20 meetings   \\ \bottomrule
 \end{tabular}
-\caption[Distribution of meeting time of train, dev and test sets]{Distribution of meeting time of train, dev and test sets \cite{amiWebsite}.}
+\caption[Distribution of train, dev and test sets]{Distribution of train, dev and test sets \cite{amiWebsite}.}
 \label{tab:meeting-time-distribution}
 \end{table}
 
