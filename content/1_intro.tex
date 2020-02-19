@@ -7,7 +7,7 @@ Google's recently announced language representation model BERT broke records for
 There have been some attempts to apply BERT to the problem of abstractive summarization, like \cite{1902.09243} and \cite{1908.08345}.
 However, they are usually trained and tested on news articles.
 Generating abstractive summaries of meetings is only a rarely researched topic.
-Most of the research for summarizing meetings has been focused on either extractive summarization or non Deep Learning approaches such as Dependency Graph Fusion \cite{1609.07035} or Multi-Sentence Compression \cite{shang-etal-2018-unsupervised}.
+Most of the research for summarizing meetings has been focused on either extractive summarization or unsupervised approaches such as Dependency Graph Fusion \cite{1609.07035} or Multi-Sentence Compression \cite{shang-etal-2018-unsupervised}.
 
 % ==============
 % PROBLEM DEFINITION
@@ -15,9 +15,12 @@ Most of the research for summarizing meetings has been focused on either extract
 
 \section{Problem Definition}
 
-The goal of this work is to analyze, if a data driven approach is feasible for abstractive meeting summarization.
-Transfer Learning should be used to compensate for the small amount of training data that is available for meeting summarization.
-As BERT's pre-training sequence length of 512 \cite[p.~13]{devlin2018bert} is way shorter than a typical meeting, a method should be developed that deals with this limitation.
+When trying to generate abstractive summaries of meetings with deep learning, you usually run into two problems: The small amount of available training data and the very long transcripts of meetings \cite[p.~650--651]{10.1007/978-3-030-20521-8_53}.
+The small amount of training data makes it very hard for a neural network to properly learn, as deep learning approaches tend to need a lot of data to produce good results.
+The long transcripts of meetings are a problem, as modern sequence-to-sequence architectures either struggle to learn long range dependencies \cite{Hochreiter01gradientflow} or have unreasonably high memory requirements for long sequence length.
+The goal of this work is to analyze, if a data driven approach is still feasible.
+BERT should be used to utilize Transfer Learning and thus limit the amount of required training data to achieve good results.
+Additionally, a method should be developed, that deals with the problem of long sequence length which is especially crucial for BERT which was only pre-trained with sequence length of 512 \cite[p.~13]{devlin2018bert} which is way shorter than a typical meeting transcript.
 
 % ======
 % METHOD
@@ -25,9 +28,10 @@ As BERT's pre-training sequence length of 512 \cite[p.~13]{devlin2018bert} is wa
 
 \section{Method}
 
-As part of this work, a network is developed that uses BERT.
+As part of this work, a network is developed that utilizes BERT and is fine-tuned for abstractive meeting summarization.
 It is trained with data from the two most commonly used meeting corpora, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin} that are described in \cref{ch:data}.
-Cross-corpus validation\footnote{\Eg training on the ICSI corpus and testing on the AMI corpus} is performed to evaluate if the network is able to generalize what it learned.
+To validate the results, automatic evaluation using ROUGE\footnote{ROUGE is explained in \cref{ssec:automatic-evaluation}} is performed and the achieved scores are compared to other approaches for abstractive meeting summarization.
+Additionally, cross-corpus validation\footnote{\Eg training on the ICSI corpus and testing on the AMI corpus} is performed to evaluate if the network is able to generalize what it learned.
 
 % =================
 % THESIS OUTLINE
@@ -40,7 +44,7 @@ Cross-corpus validation\footnote{\Eg training on the ICSI corpus and testing on 
 \Cref{ch:system-description} describes the model architecture of the network used in this thesis.
 It also explains, how the network was trained and what steps were performed to prepare the training data.
 Additionally, it focuses on the actual implementation with the Texar library \cite{hu2019texar} and what hyperparameters where used for training.
-\Cref{ch:experiments} presents the experiments that were performed on the network and what scores it archived. I
+\Cref{ch:experiments} presents the experiments that were performed on the network and what scores it achieved compared to other summarization approaches and a simple baseline.
 It also provides some hand-picked example outputs.
 \Cref{ch:outlook} gives an outlook for possible future research.
 Finally, \cref{ch:summary-and-conclusion} summarizes the results of the work and draws a conclusion how they can be interpreted.
