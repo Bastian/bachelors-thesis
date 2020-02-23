@@ -16,7 +16,7 @@ The relevant aspects and annotation of the AMI Meeting Corpus, that are relevant
 \subsection{Scenario and Non-Scenario Meetings}
 
 The AMI Meeting Corpus contains data for two different types of meetings: Scenario meetings and non-scenario meetings.
-For this work, only the data from the scenario meetings are used, as the non-scenario meetings are missing some annotations that are necessary for this work. % TODO What annotations are missing?
+For this work, only the data from the scenario meetings are used, as the non-scenario meetings are missing some annotations\footnote{Mainly dialogue acts and abstractive summaries} that are necessary for this work.
 The following paragraphs describe the scenario of the scenario meetings.
 
 For the scenario meetings, participants play employees of an electronics company that work together on a project.
@@ -76,7 +76,7 @@ S3: The team then discussed various features to consider in making
 \label{fig:abstractive-summary-example}
 \end{figure}
 
-For each meeting, abstractive summaries are available.
+For each scenario meeting, abstractive summaries are available.
 Each abstractive summary consists of an abstract, decisions, problems/issues and actions.
 Usually, the abstract consists of multiple sentences.
 An example for such an abstract with 3 sentences is shown in \cref{fig:abstractive-summary-example}.
@@ -121,8 +121,14 @@ Annotations that are the same for both meetings like dialogue acts or abstractiv
 
 Unlike the scenario meetings of the AMI Meeting Corpus, the ICSI Meeting Corpus has natural meetings that do not cover a specific topic or artificial scenario.
 However, as the meetings are all recorded at the International Computer Science Institute, they usually follow a specific type.
-Because of this, every meeting of the corpus is classified as on one of 5 different meeting types. \cite{Janin}
-% TODO Name/describe the 5 types of meetings. 
+Because of this, every meeting of the corpus is classified as on one of 5 different meeting types \cite{Janin}:
+\begin{itemize}
+\item \textbf{Even Deeper Understanding}: Discussions about natural language processing and neural theoris of language
+\item \textbf{Meeting Recorder}: Meetings about the ICSI Meeting Corpus
+\item \textbf{Robustness}: Mettings about methods on how to compensate for envorimental issues in speech recognition like noise or reverberations
+\item \textbf{Network Services and Applications}: Meetings from groups that research internet architectures, standards and related networking issues
+\item \textbf{Other one-time only meetings}
+\end{itemize}
 
 \paragraph{Topic Segmentation Annotation}
 
