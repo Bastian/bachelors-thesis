@@ -73,10 +73,10 @@ ROUGE supports multiple evaluation metrics.
 To report the results achieved in this thesis, the following three metrics are used:
 \begin{itemize}
 \item \textbf{ROUGE-1} which calculates the overlap of single words (unigrams) between the candidate summary and the reference summary. 
-\item \textbf{ROUGE-2} which is similar to ROUGE-1, but instead of using the overlap of single words, it uses word pairs of 2 (bigrams).
-\item \textbf{ROUGE-SU4} which uses a combination of unigram overlap and skip-4gram overlap.
-A skip-4gram is an ordered pair of four words, allowing for gaps between the words.
-For example, in the sentence "My name is John Doe" a skip-4gram would be "My is John Doe".
+\item \textbf{ROUGE-2} which is similar to ROUGE-1, but instead of using the overlap of single words, it uses word pairs of two (bigrams).
+\item \textbf{ROUGE-SU4} which uses a combination of unigram overlap and skip-bigram overlap with a maximum skip distance of four.
+A skip-bigram is an ordered pair of two words, allowing for gaps between the words.
+For example, in the sentence "My name is John Doe" a skip-bigram would be "name Doe".
 \end{itemize}
 
 When comparing word overlap, one has to differentiate between recall and precision \cite{Ting2010}.
