@@ -68,15 +68,13 @@ This processes is repeated multiple times.
 Evaluating summaries is essential for multiple reasons, \eg to monitor progress during training or to compare own results to results from other researchers.
 While human evaluation seems like an obvious approach, it is usually not feasible because it is slow, expensive and results from different people are not always comparable.
 The more common approach is automatic evaluation.
-To automatically evaluate summaries, ROUGE (Recall-Oriented Understudy for Gisting Evaluation) \cite{lin-2004-rouge} is widely adapted, as it tends to correlate well with human judgments.
+To automatically evaluate summaries, Recall-Oriented Understudy for Gisting Evaluation (ROUGE) \cite{lin-2004-rouge} is widely adapted, as it tends to correlate well with human judgments.
 ROUGE supports multiple evaluation metrics.
 To report the results achieved in this thesis, the following three metrics are used:
 \begin{itemize}
 \item \textbf{ROUGE-1} which calculates the overlap of single words (unigrams) between the candidate summary and the reference summary. 
 \item \textbf{ROUGE-2} which is similar to ROUGE-1, but instead of using the overlap of single words, it uses word pairs of two (bigrams).
-\item \textbf{ROUGE-SU4} which uses a combination of unigram overlap and skip-bigram overlap with a maximum skip distance of four.
-A skip-bigram is an ordered pair of two words, allowing for gaps between the words.
-For example, in the sentence "My name is John Doe" a skip-bigram would be "name Doe".
+\item \textbf{ROUGE-L} which uses the longest common subsequence to calculate the score. A subsequence must not be confused with a substring. For the sentences "My favorite name is John Doe" and "My name is Maria Doe", the longest common subsequence would be "My name is Doe", whereas the longest substring would just be "name is".
 \end{itemize}
 
 When comparing word overlap, one has to differentiate between recall and precision \cite{Ting2010}.
