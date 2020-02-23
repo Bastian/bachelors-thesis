@@ -1,14 +1,14 @@
 \chapter{Summary and Conclusion}\label{ch:summary-and-conclusion}
 
-In this theses, a neural approach for abstractive meeting summarization was shown.
+In this theses, a neural approach for abstractive meeting summarization was presented.
 By segmenting meeting transcripts by topics and generating a summary sentence for each of this segments proofs to be a praticable solution to deal with the usually very long transcripts of meetings.
-It was possible to generate meeting transcripts with a modest sequence length of 96, using only a single RTX 2080Ti GPU with 11GB of video memory.
-The achieved ROUGE scores of the presented neural approach are higher than recent unsupervised approaches for abstractive summarization of meetings.
+It was possible to generate meeting transcripts with a modest maximum sequence length of 96, using only a single RTX 2080 Ti GPU with 11GB of video memory.
+The achieved ROUGE scores of the presented neural approach are higher than any of the recent unsupervised approaches for generating abstractive summaries of meetings.
 However, as these results are not comparable, because the neural network has an unfair advantage by having access to the summaries of the training set while the unsupervised approaches only have the transcripts of the meetings.
 To still have a baseline that can be used to validate the results, for each topic of a meeting in the test set, a random summary sentence from the training set was used.
-The trained neural network achieved results that are significantly better than this simple baseline which shows that the transfer learning approach seems to work.
+The trained neural network achieved results that are significantly better than this simple baseline which inidcates that a neural data-driven approach seems to work.
 
 Unfortunately, the generated summaries have some with some issues, that make them hardly usable for practical applications.
 Summaries often contain duplicate or very similar sentences.
-The more significant problem are wrong summary sentences that contain incorrect information that is not present in the input.
+While this issue can be solved quite easily. the more significant problem are wrong summary sentences that contain incorrect information that is not present in the input.
 Additionally, cross-corpus validation shows very poor results, which indicates that utilizing Transfer Learning can not make up for the small amount of available training data.

@@ -10,11 +10,12 @@
 
 When learning from data, the data is usually either labeled or unlabeled.
 An example for labeled data can be images with a caption, where the image itself is the data and the caption is the label.
-For abstractive summarization tasks, data is usually labeled, with the source text being the data and the summary of this text the label.
+For abstractive summarization tasks, data is usually labeled, with the source text being the data and the summary of this text being the label.
 Unlabeled data can be any data, such as plain images or texts.
 Unlike labeled data, the amount of unlabeled data is usually much higher, as labeling data is an expensive manual process while unlabeled data is usually produced as a by-product.
+A popular example for unlabeled text data is Wikipedia which contains over a billion words for English alone \cite{wikipediaStats}. 
 
-%TODO Quelle?
+%TODO Source?
 
 \subsection{Neural Networks}
 
@@ -25,26 +26,28 @@ Unlike labeled data, the amount of unlabeled data is usually much higher, as lab
 \label{fig:neural-network}
 \end{figure}
 
-Nowadays, artificial neural networks are a very common way to learn from data.
-A neural network consists of neurons, that are inspired by real brain neurons, and connection between these neurons.
-Each neuron can be seen as a function that takes the values of all its predecessor nodes as input and outputs a values, that by itself is used as the input for its successor nodes.
+Nowadays, artificial neural networks are a very popular and common way to learn from data due to the availability of better hardware and an increasing amount of training data.
+A typical neural network consists of neurons, that are inspired by real brain neurons, and connection between these neurons.
+Each neuron can be seen as a function that takes the values of all its predecessor nodes as input and outputs a value, that by itself is used as the input for its successor nodes.
 To compute a node's output, the value $x \in X$ of every predecessor node is multiplied with a weight $w \in W$.
-Then, a constant bias $b$ is added to the sum of these multiplications and finally, an activation function $\Phi$ is applied to this sum:
+Then, a constant bias $b$ is added to the sum of these multiplications and finally, an activation function $\Phi$ is applied to this sum as shown in the following equation:
 \[
 	y = \Phi(\sum_{i=0}^{d}x_iw_i + b)
 \]
 With $d$ being the amount of predecessor nodes and $y$ being the node's output.
-The activation function $\Phi$ usually is a nonlinear function, that maps its input to values between $-1$ and $1$ or $0$ and $1$.
+For most nodes. the activation function $\Phi$ usually is a nonlinear function, that maps its input to values between $-1$ and $1$ or $0$ and $1$.
+A popular example of an activation function is sigmoid, which maps negative values to values close to $0$ and positive values to values close to $1$.
 \cite[p.~4--13]{Aggarwal2018}
 
 \paragraph{Feed-Forward Networks}
 
-One of the simplest and most common neural networks is the feed-forward network.
+One of the simplest and most common neural network architectures is the feed-forward network.
 Such a network consists of multiple layers, where neurons only have predecessors in the previous layer and successors in the next layer.
 The first layer with no predecessors is called the input layer, as here the actual input for the neural network is used as the node's values.
 The last layer with no successors is called the output layer.
 The values of the nodes in the output layer are used as the output of the whole network.
 Every layer in between these two layers is called a hidden layer.
+While the nodes in the hidden layer usually have a non-linear activation function, nodes in the output layer sometimes have a linear activation function like ReLU if the output is an absolute value. 
 Such a network is shown in \cref{fig:neural-network}.
 \cite[p.~17--20]{Aggarwal2018}
 
@@ -58,19 +61,22 @@ In the backward phase, the gradients of the loss function is computed and then t
 This processes is repeated multiple times.
 \cite[p.~21--24]{Aggarwal2018}
 
-\subsection{Automatic Evaluation}
+% TODO Maybe add an "Overfitting" paragraph
+
+\subsection{Automatic Evaluation}\label{ssec:automatic-evaluation}
 
 Evaluating summaries is essential for multiple reasons, \eg to monitor progress during training or to compare own results to results from other researchers.
-While human evaluation seems like an obvious approach, it is usually not feasible as it is slow, expensive and results from different people are not always comparable.
+While human evaluation seems like an obvious approach, it is usually not feasible because it is slow, expensive and results from different people are not always comparable.
 The more common approach is automatic evaluation.
 To automatically evaluate summaries, ROUGE (Recall-Oriented Understudy for Gisting Evaluation) \cite{lin-2004-rouge} is widely adapted, as it tends to correlate well with human judgments.
 ROUGE supports multiple evaluation metrics.
 To report the results achieved in this thesis, the following three metrics are used:
 \begin{itemize}
 \item \textbf{ROUGE-1} which calculates the overlap of single words (unigrams) between the candidate summary and the reference summary. 
-\item \textbf{ROUGE-2} which is similar to ROUGE-1, but instead of using the overlap of single words, it uses word pairs of 2 (bigram).
+\item \textbf{ROUGE-2} which is similar to ROUGE-1, but instead of using the overlap of single words, it uses word pairs of 2 (bigrams).
 \item \textbf{ROUGE-SU4} which uses a combination of unigram overlap and skip-4gram overlap.
-A skip-4gram is an ordered pair of 4 words, ignoring any gaps between the words.
+A skip-4gram is an ordered pair of four words, allowing for gaps between the words.
+For example, in the sentence "My name is John Doe" a skip-4gram would be "My is John Doe".
 \end{itemize}
 
 When comparing word overlap, one has to differentiate between recall and precision \cite{Ting2010}.
@@ -87,7 +93,7 @@ It is calculated by the following formula:
 
 \section{Transformer}\label{sec:transformer}
 
-The Transformer is a neural network architecture for sequence learning that was published in 2017 \cite{1706.03762}.
+The Transformer is a neural network architecture for sequence learning that has been published in 2017 \cite{1706.03762}.
 It achieved new state-of-the-art results for many machine translation tasks while at the same time requiring significant less training time compared to previous well performing models.
 
 \subsection{Motivation}\label{ssec:transformer-motivation}
@@ -108,7 +114,7 @@ A simplified RNN for sequence-to-sequence tasks like machine translation is show
 \label{fig:rnn-visualization}
 \end{figure}
 
-Another problem of RNNs is the long distance, information has to "travel" before it is used.
+Another problem of RNNs is the long distance, information has to "travel" before it is used. % TODO Illustrate this long "travel" distance
 Information that was encoded into the hidden state has to pass through multiple encoding and decoding steps, before it is finally used in one of the decoding steps.
 Besides having the hidden state as an information bottleneck, this also makes it very hard for the network to learn long range dependencies because of the problem of vanishing or exploding gradients \cite{Hochreiter01gradientflow}.
 Modern variants of RNNs like the long short-term memory (LSTM) architecture \cite{Hochreiter1997} try to mitigate these effects, but aren't able to fully eliminate them.
@@ -120,7 +126,7 @@ The Transformer network tries to take advantage of the attention mechanism while
 
 \subsection{Model Architecture}\label{ssec:transformer-model-architecture}
 
-Just like sequence-to-sequence RNNs, the Transformer consists of an encoder and a decoder that both consist of a stack of layers.
+Just like sequence-to-sequence RNNs, the Transformer consists of an encoder and a decoder that both have multiple stacks of layers.
 
 \begin{figure}[h]
 \centering
@@ -129,17 +135,17 @@ Just like sequence-to-sequence RNNs, the Transformer consists of an encoder and 
 \label{fig:transformer-model}
 \end{figure}
 
-An encoder layer consists of two sub-layers.
+An encoder layer is made up of two sub-layers.
 The first sub-layer is a multi-head self-attention mechanism which is described later in this section.
 The second sub-layer is a position-wise \footnote{The identically network is applied to each position separately \cite[p.~5]{1706.03762}} fully connected feed-forward network.
 Both sub-layers have residual connections \cite{1512.03385} around them, that are followed by layer normalization \cite{1607.06450}.
 The outputs of the layers of the Transformer base model have $d_{model}=512$ dimensions and $d_{model}=1024$ for the big model \cite[p.~9]{1706.03762}.
 
-The encoder layer has a similar structure, but with one additional sub-layer and a slight modification of the multi-head self-attention sub-layer.
+An encoder layer has a similar structure, but with one additional sub-layer and a slight modification of the multi-head self-attention sub-layer.
 The new sub-layer is able to attend to the output of the encoder.
 The multi-head self-attention sub-layer is masked, to prevent it from attending to future words. \cite[p.~3]{1706.03762}.
 
-In the original Transformer, $N = 6$ stacked encoder and decoder layers are used.
+In the original Transformer, $N = 6$ stacked encoder and decoder layers are used for both the base and the big model.
 The complete architecture of the Transformer is visualized in \cref{fig:transformer-model}.
 
 The inputs are simple learned embedding vectors of dimension $d_{model}$ that are concatenated with a fixed positional embedding \cite[p.~5--6]{1706.03762}.
@@ -152,9 +158,9 @@ The positional encoding is calculated with sine and cosine functions of differen
 
 This encoding allows the network to obtain information about the absolute and relative position of each element.
 \Cref{fig:positional-encoding-sine-cosine} visualizes the embedding for some dimensions.
-It is clearly visible how each position has a different embedding.
+It is clearly visible how each position has a different positional embedding.
 
-For the outputs, a learned linear transformation and a softmax function are used to generate next-token probabilities \cite[p.~5]{1706.03762}.
+For the outputs, a learned linear transformation and a softmax function are used to compute next-token probabilities \cite[p.~5]{1706.03762}.
 
 \begin{figure}[h]
 \centering
@@ -179,7 +185,8 @@ To calculate the attention, the following formula is used:
 \[
 	\textrm{Attention}(Q,K,V) = \textrm{softmax}(\dfrac{QK^T}{\sqrt{d_k}})V
 \]
-where the matrices $Q$, $K$ and $V$ contain multiple sets of queries, keys and values \cite[p.~3--4]{1706.03762}.
+where $Q$, $K$ and $V$ are matrices that contain multiple sets of queries, keys and values \cite[p.~3--4]{1706.03762}.
+Masking for the decoder layer is easily performed by setting the input values of the softmax function to $-\infty$ if they are not allowed.
 
 Unlike normal attention, the Transformer uses "Multi-Head Attention".
 Instead of having a single attention function, the queries, keys and values are linearly projected with learned linear projections \cite[p.~4--5]{1706.03762}.
@@ -213,7 +220,7 @@ It broke several records for Natural Language Processing Benchmarks \cite[p.~5--
 \subsection{Motivation}
 
 It has been shown, that results for many natural language processing tasks can be improved with the help of language models.
-The most famous amoung them are OpenAI's GPT-2 \cite{radford2019language} and ELMo \cite{1802.05365}.
+The most famous among them are OpenAI's GPT-2 \cite{radford2019language} and ELMo \cite{1802.05365}.
 The benefit of language models is, that most of them can be trained on unlabeled data, like Wikipedia articles or large book corpora.
 This allows them to learn from a huge amount of data, as there is no need for time-consuming labeling of the training data and any texts can be used.
 By pre-training them on normal texts, the networks can get a general sense of natural language.
@@ -228,7 +235,7 @@ This general sense for language can then be used for more specific tasks.
 \end{figure}
 
 What's new about BERT, compared to other models like GPT-2, is, that it is the first deeply bidirectional language model, that takes advantage of the whole context around of a word.
-OpenAI's GPT-2 uses a left-to-right Transformer \cite[p.~4]{radford2019language}, which only allows it to "look" at the words to the left, when generating a representation for an input token.
+OpenAI's GPT-2 uses a left-to-right Transformer decoder \cite[p.~4]{radford2019language}, which only allows it to "look" at the words to the left, when generating a representation for an input token.
 For example, when having a sentence that starts with "The lighter", the network can only look at these two words to generate a representation for the word "lighter".
 However, the word can have completely different meanings, depending on the whole sentence, e.g. "The lighter is an easy tool to make fire" compared to "The lighter shade of red looks better than the darker one". 
 ELMo tries to compensate this issue by training two LSTMs with one being a normal forward LSTM (left-to-right) and the other one being a backward LSTM (right-to-left) which is given the input sequence in reverse \cite[p.~2--3]{1802.05365}.
@@ -237,19 +244,20 @@ Afterwards, it concatenates the representations of these two LSTMs to get a semi
 
 \subsection{Model Architecture}
 
-At its core, BERT is just a Transformer decoder, as described in \cref{ssec:transformer-model-architecture}.
+At its core, BERT is just a Transformer encoder, as described in \cref{ssec:transformer-model-architecture}.
+What's new about BERT's architecture is mainly how it is trained and how the inputs and outputs are represented.
 
 \paragraph{Input and Output Representations}
 
 BERT's input tries to be applicable for many different natural language processing tasks.
-It allows the inputs of either one sentence or a pair of two sentences, with sentences refering to ``an arbitrary span of contiguous text, rather than an actual linguistic sentence'' \cite[p.~4]{devlin2018bert}.
-Texts are tokenized by using WorkPiece embeddings with a vocabulary of 30'000 tokens. % TODO Maybe explain the tokenization in more detail
+It allows the inputs of either one sentence or a pair of two sentences\footnote{In the context of BERT, a sentence does not refer to an actual linguistic sentence, but an arbitrary span of contiguous text \cite[p.~4]{devlin2018bert}}.
+Texts are tokenized by using WordPiece embeddings with a vocabulary of 30,000 tokens. % TODO Maybe explain the tokenization in more detail
 Every input sequence starts with a special \texttt{[CLS]} token and every sentence ends with a special \texttt{[SEP]} token.
 Additionally to the token embeddings, the input consists of two more types of embeddings.
-The first one are a learned segment embeddings, that indicates if a token belongs to the first or the second token.
+The first ones are learned segment embeddings, that indicate if a token belongs to the first or the second token.
 The second one are position embeddings, that help the network to understand the positions of each token in the sequence.
-Unlike the original Transformer, BERT does not use fixed posisional embeddings, but learned ones.
-Finally, these three embeddings are concatendated to form the actual input for the network as shown in \cref{fig:bert-input-representation}.
+Unlike the original Transformer, BERT does not use fixed positional embeddings, but learned ones.
+Finally, these three embeddings are concatenated to form the actual input for the network as shown in \cref{fig:bert-input-representation}.
 
 \begin{figure}[h]
 \centering
@@ -281,9 +289,8 @@ Labels: [MASK1] = store; [MASK2] = gallon
 \label{fig:bert_masking_example}
 \end{figure}
 
-
-The task of the network is, to predict the masked tokens.
-This task allows the network to take the context of a word into consideration.
+The task of the network is to predict the masked tokens.
+This task requires the network to learn to take the context of a word into consideration.
 
 For the second task, the network is given two sentences.
 The network then has to predict, if the second of these two sentences comes after the first one in the original text or if it is just a randomly selected sentence from any other text.
@@ -307,7 +314,8 @@ Label: NotNextSentence
 
 Ideally, this helps the network to understand the relationship between two sentences.
 However, this task has been shown to be too simple for the network, as it is easier for it to just learn if the topics of two sentences match instead of understanding the real relationship of the sentences.
-Newer successors of BERT such as ALBERT use slightly changed training objectives, like sentence order prediction \cite[p.~3]{1909.11942} in which the goal is to predict, which of two given sentences comes first.
+To make the task harder, newer successors of BERT such as ALBERT use slightly changed training objectives, like sentence order prediction \cite[p.~3]{1909.11942} in which the goal is to predict, which of two given sentences comes first.
+This allows the network to better learn the relations between sentences instead of just detecting matching topics.
 
 Pre-training is usually very expensive.
 The training was performed for 4 days on 4 Cloud TPUs for BERT\textsubscript{BASE} and 16 Cloud TPUs for the larger model BERT\textsubscript{LARGE} with each Cloud TPU having 4 TPU chips \cite[p.~13]{devlin2018bert}.
@@ -316,5 +324,5 @@ However, it is only necessary to do pre-training once.
 \paragraph{Fine-Tuning}
 
 After the unsupervised pre-training, the network can be fine-tuned for a specific task.
+This is done by just training a full network on the desired task for a short time.
 Fine-Tuning is far less expensive than pre-training and can usually be done in less than 1 hour on a single Cloud TPU, or a few hours on a normal GPU \cite[p.~5]{devlin2018bert}.
-% TODO This chapter can be a bit longer...

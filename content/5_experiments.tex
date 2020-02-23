@@ -11,7 +11,7 @@
 \centering
 \begin{tabular}{c|l|clll}
 \textbf{Variant}              & \textbf{Training Steps}                                                                   & \textbf{Metric} & \textbf{Pre} & \textbf{Rec} & \textbf{F} \\ \hline
-\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}8620 steps\\ (approx. 141 epochs)\end{tabular}} & \textbf{R-1}    & 0.3849       & 0.2952       & 0.3192     \\
+\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}8625 steps\\ (approx. 141 epochs)\end{tabular}} & \textbf{R-1}    & 0.3849       & 0.2952       & 0.3192     \\
                               &                                                                                            & \textbf{R-2}    & 0.1718       & 0.1351       & 0.1428     \\
                               &                                                                                            & \textbf{R-L}    & 0.3489       & 0.2701       & 0.2687     \\ \hline
 \multirow{3}{*}{\textbf{AAI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
@@ -42,6 +42,8 @@ Results for the following combinations are reported:
 \item Trained, validated and tested on a combined AMI and ICSI corpus, using a 70/15/15 split (\textbf{CCC})
 \end{itemize}
 
+All the reported results were calculated on the test set.
+
 Training took on average less than one hour on a single RTX 2080 Ti GPU.
 The achieved ROUGE scores are shown in \cref{tab:initial-experiment-rouge}.
 While the results for AAA, III, CCC are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
@@ -69,14 +71,15 @@ MS: the project manager will create a final report
 \end{figure}
 
 \Cref{fig:initial-experiment-example} shows two hand-picked examples of generated summaries, together with the input and the human summary.
-It is easily visible, that the network tends to overfit the data, as the generated summary contains information that is not part of the actual input, but can only be guessed if the settings of AMI's scenario meeting is taken into account\footnote{E.g. that the final report is always written by the project manager}.
+It is easily visible, that the network tends to overfit the data, as the generated summary contains information that is not part of the actual input, but can only be guessed if the settings of AMI's scenario meeting is taken into account \eg that the final report is always written by the project manager.
 This also explains the bad results for the AAI and IAA variations, as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
 
-However, the network is able to correctly interpret the context of a sentence and is to a certain degree able to generate new sentences.
+However, the network is able to correctly interpret the context of a sentence and is -- at least to a certain degree -- able to generate new sentences.
 The generated summary from the first example is not present in the training data at all, but constructed from multiple different sentences.
 The generated summary from the second example is identically to a human summary that was used for training, but for another input.
-This human summary with the matching dialogue act is shown in \cref{fig:initial-experiment-training-example}.
+This human summary with the matching dialogue act in the training data set is shown in \cref{fig:initial-experiment-training-example}.
 Unfortunately, the second example is the much more common case and the network does not generate new sentences very often, but only copies them from the training examples.
+By reducing the amount of training steps, the network tends to generate own sentences more often, but at the cost of lower scores.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
@@ -110,9 +113,9 @@ HS: The project manager will create a final report
 For the extended experiments, the topic segmentation described in \cref{ssec:ami-annotations} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
 This results in one summary sentence for each topic of a meeting.
 By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
-For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus}, as there is no manual topic segmentation available for the ICSI Meeting Corpus.
+For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus}, as there is no manual topic segmentation available for the ICSI Meeting Corpus. % TODO Maybe use the automatic segmentation with the automatic transcript?
 
-The achived ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
+The achieved ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
 An example for a generated summary is shown in \cref{fig:extended-experiment-example}.
 
 \begin{figure}[h]
@@ -149,9 +152,9 @@ project manager closed the meeting.
 
 \paragraph{Comparison With Other Approaches}
 
-When just looking the the plain ROUGE scores, the neural approach outperforms any of the existing attempts for abstractive meeting summarization, like \cite{oya-etal-2014-template}, \cite{1609.07035} or \cite{shang-etal-2018-unsupervised}.
-However, this comparison is not fair, as their approaches do only use the dialoge acts or transcripts to generate their summaries.
-While this is also true for the model of this work, it had access to the abstractive summaries of the training set during its training.
+When just comparing the the plain ROUGE scores, the neural approach outperforms any of the existing unsupervised attempts for abstractive meeting summarization, like \cite{oya-etal-2014-template}, \cite{1609.07035} or \cite{shang-etal-2018-unsupervised}. % TODO List the results for these cited papers for easier comparison
+However, this comparison is not fair, as their approaches do only use the dialogue acts or transcripts to generate their summaries.
+While this is also true for the model of this work, it has access to the abstractive summaries of the training set during its training.
 Because all of AMI's scenario meetings have a very similar structure, the abstracts in the training data tend to be very similar to the abstracts in the test data set.
 This gives the network an unfair advantage over the other approaches and makes the results hardly comparable.
 
@@ -168,7 +171,7 @@ This gives the network an unfair advantage over the other approaches and makes t
 \label{tab:extended-experiment-rouge-random}
 \end{table}
 
-To have a baseline that results can be compared to, one can just randomly pick a summary sentence from the training data for every topic.
+To still have a baseline that results can be compared to, one can just randomly pick a summary sentence from the training data for every topic.
 If the network is able to understand the meaning of its input, it should outperform this baseline.
 When comparing the network's scores shown in \cref{tab:extended-experiment-rouge} with this random baseline shown in \cref{tab:extended-experiment-rouge-random}, the results of the network indeed outperform the baseline by a significant margin.
 
@@ -176,5 +179,5 @@ When comparing the network's scores shown in \cref{tab:extended-experiment-rouge
 
 The generated summaries come with some issues, that are not visible when just looking at the ROUGE scores.
 One example are duplicate sentences, or sentences that carry the same meaning, like the two sentences "the project manager closes the meeting." and "the project manager closed the meeting." that are both part of the same summary shown in \cref{fig:extended-experiment-example}.
-While this issue could be solved by some clever duplicate filtering, a more severe issue is wrong information in the summaries.
+While this issue could be solved by some clever filtering of duplicates, a more severe issue is wrong information in the summaries.
 E.g. the sentence "the marketing expert discussed his findings from trend watching reports" is incorrect for the meeting from \cref{fig:extended-experiment-example}.

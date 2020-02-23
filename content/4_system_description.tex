@@ -15,20 +15,20 @@
 \label{fig:summarization-architecture}
 \end{figure}
 
-The architecture of the model used in this work is pretty simple.
+The architecture of the model used in this work is pretty straight forward.
 For the encoding part, BERT is used and for decoding, a normal Transformer decoder is used.
 Like proposed in \cite{1608.05859}, the input embeddings are tied to the output layer.
 
-As described in \cref{sec:bert}, BERT allows either one or two sentence\footnote{Remember, that sentence is not referring to an actual linguistic sentence} inputs.
+As described in \cref{sec:bert}, BERT allows either one or two sentence\footnote{Keep in mind, that sentence is not referring to an actual linguistic sentence} inputs.
 For this work, only one sentence is used, as there is no need (and logical way) to split the input into two parts.
 The Transformer decoder performs attentions over the full output representations of the encoder.
 The full architecture is shown in \cref{fig:summarization-architecture}.
 
-% =======
-% TRAINING
-% =======
+% ================
+% TRAINING AND CONCEPT
+% ================
 
-\section{Training}\label{sec:system-description-training}
+\section{Training and Concept}\label{sec:system-description-training}
 
 % TODO I'm pretty sure that there are better examples, but for now this is fine
 \begin{figure}[h]
@@ -50,16 +50,29 @@ An example for such a link is shown in \cref{fig:dialogue-arc-summary-link-examp
 For training, all of these dialogue acts, that belong to the same summary sentence, are concatenated and then used as the source for the summary.
 The summary sentence itself is used as the target summary.
 
-\subsection{Preparation of Training Data}
+During training, the network was evaluated on the development data set every 75 steps.
+If the networks improved its score, this model was saved.
 
-This subsection desrcribes how the training data is processed.
+To get a summary of a whole meeting, the topic segmentation described in \cref{ssec:ami-annotations} is used.
+The meeting's transcript is segmented by topic and then these segments are used as the input for the same network that was already trained to summarize dialogue acts.
+Afterwards, the output for all transcript segments can be concatenated.
+These concatenated outputs together form the full summary of a meeting. 
+
+\section{Preparation of the Data}
+
+This subsection describes how the data of the two used corpora introduced in \cref{ch:data} is processed.
 
 \paragraph{Format of the Corpus Data}
 
 The corpus data for both the AMI Meeting Corpus and the ICSI Meeting Corpus is available in the NITE XML Toolkit (NXT) format \cite{Carletta2003}.
 For automatic parsing, a Java library is available, that makes it possible to write a Java program that traverses through the data and collects the necessary data.
 For this work, such a program was developed.
-It parses the data from the corpora and creates three tab-sepreated-values (.tsv) files, one for each dataset (training, development, test).
+
+It parses the data of the corpora and creates more easily parseable files compared to the complex NXT format.
+For training, three tab-separated-values (.tsv) files are created, one for each dataset (training, development, test).
+For generating the final summary, it creates a text file for each meeting.
+The text files contains the transcripts of the meeting, split by topic with each topic-transcript starting in a new line.
+To evaluate the results, for each meeting a text file is generated that contains the summary of this meeting.
 
 \paragraph{Data Cleaning}
 
@@ -70,8 +83,27 @@ Word like "yeah", "nope" or "nah" are kept, because they carry meaning, like agr
 
 \paragraph{Data Split}
 
-For the AMI Meeting Corpus, the proposed segmentation described in \cref{ssec:ami-segmentation-of-the-corpus} is used.
-As the ISCI Meeting Corpus has no recommended segmentation (see \cref{ssec:icsi-segmentation-of-the-corpus}), always the whole dataset is used, but only to perform cross-corpus validation.
+\begin{figure}[h]
+\begin{lstlisting}[numbers=none]
+TRAIN: Bdb001, Bed002, Bed003, Bed004, Bed008, Bed009, Bed010, 
+       Bed012, Bed013, Bed015, Bed016, Bed017, Bmr003, Bmr005, 
+       Bmr006, Bmr007, Bmr009, Bmr010, Bmr011, Bmr014, Bmr016,
+       Bmr019, Bmr020, Bmr023, Bmr024, Bmr025, Bmr026, Bro003,
+       Bro004, Bro007, Bro011, Bro014, Bro015, Bro017, Bro018,
+       Bro019, Bro022, Bro023, Bro024, Bro027, Bro028
+TEST:  Bed005, Bed011, Bed014, Bmr012, Bmr013, Bmr015, Bro010,
+       Bro012, Bro016, Bro021
+EVAL:  Bed006, Bmr018, Bmr027, Bns001, Bro005, Bro008, Bro013,
+       Bro025, Bro026, Buw001
+\end{lstlisting}
+\caption{The exact data split used for the ICSI Meeting Corpus.}
+\label{fig:icsi-split}
+\end{figure}
+
+For the AMI Meeting Corpus, the recommended segmentation described in \cref{ssec:ami-segmentation-of-the-corpus} is used.
+As the ISCI Meeting Corpus has no recommended segmentation (see \cref{sec:icsi-corpus}), it is necessary to come up with an own data split.
+For this work, if a split is necessary, a random 70/15/15 was generated once and then used for all the experiments.
+The exact split used is shown in \cref{fig:icsi-split}
 
 % ===================
 % IMPLEMENTATION WITH TEXAR
@@ -120,7 +152,7 @@ As an example, the hyperparamater config for the Transformer decoder is shown in
 
 The following section will explore the used hyperparameters.
 The parameters were determined empirically by testing multiple variations.
-After multiple tests, the following hyperparameters have shown the best results.
+After multiple tests, the following hyperparameters have shown to yield the best results.
 
 \begin{figure}[h]
 \centering
@@ -136,7 +168,8 @@ The learning rate is computed by the following formula:
 \[
 	learning\_rate = 0.2 \cdot d_{model}^{-0.5} \cdot min(step\_num^{-0.5}, step\_num \cdot warmup\_steps^{-1.5})
 \]
-which is equivalent to the learning rate used to train the original Transformer \cite[p.~7]{1706.03762}, but multiplied by $0.2$ as this yields better results for this training data as shown be empirical testing.
+which is equivalent to the learning rate used to train the original Transformer \cite[p.~7]{1706.03762}, but multiplied by a factor of $0.2$, because this yields better results for this training data as shown be empirical testing.
+Results for tests with a constant linear learning rate have been slightly worse.
 The warmup steps are set to $warmup\_steps = 4000$.
 The formal can be interpreted as linearly increasing the learning rate until $warmup\_steps < steps$ and then steadily decreasing it again.
 The function's graph is visualized in \cref{fig:learning-rate}.
@@ -146,7 +179,7 @@ The function's graph is visualized in \cref{fig:learning-rate}.
 Due to memory constraints\footnote{Training was performed on a single Nvidia RTX 2080TI GPU with 11 GB of memory}, it was necessary to find a good balance between the batch size and maximum input sequence length.
 For the experiments performed in this thesis, the following values proofed to be a good compromise:
 \begin{itemize}
-\item A maximum input sequence length of $96$
+\item A maximum input sequence length of $96$ % TODO Maybe provide some stats: What is the average sequence length and how many inputs were truncated with a sequence length of 96?
 \item A batch size of $28$
 \end{itemize}
 
@@ -154,7 +187,7 @@ Smaller batch sizes harm the networks performance and smaller maximum sequence l
 
 \paragraph{BERT}
 
-Due to the same memory constrains mentioned in the previous paragraph, the smaller BERT model BERT\textsubscript{BASE} is used.
+Due to the same memory constrains mentioned in the previous paragraph, the smaller BERT model BERT\textsubscript{BASE} is used as the larger model BERT\textsubscript{LARGE} requires significantly more memory.
 
 \paragraph{Transformer decoder}
 
