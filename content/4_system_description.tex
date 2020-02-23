@@ -83,27 +83,8 @@ Word like "yeah", "nope" or "nah" are kept, because they carry meaning, like agr
 
 \paragraph{Data Split}
 
-\begin{figure}[h]
-\begin{lstlisting}[numbers=none]
-TRAIN: Bdb001, Bed002, Bed003, Bed004, Bed008, Bed009, Bed010, 
-       Bed012, Bed013, Bed015, Bed016, Bed017, Bmr003, Bmr005, 
-       Bmr006, Bmr007, Bmr009, Bmr010, Bmr011, Bmr014, Bmr016,
-       Bmr019, Bmr020, Bmr023, Bmr024, Bmr025, Bmr026, Bro003,
-       Bro004, Bro007, Bro011, Bro014, Bro015, Bro017, Bro018,
-       Bro019, Bro022, Bro023, Bro024, Bro027, Bro028
-TEST:  Bed005, Bed011, Bed014, Bmr012, Bmr013, Bmr015, Bro010,
-       Bro012, Bro016, Bro021
-EVAL:  Bed006, Bmr018, Bmr027, Bns001, Bro005, Bro008, Bro013,
-       Bro025, Bro026, Buw001
-\end{lstlisting}
-\caption{The exact data split used for the ICSI Meeting Corpus.}
-\label{fig:icsi-split}
-\end{figure}
-
 For the AMI Meeting Corpus, the recommended segmentation described in \cref{ssec:ami-segmentation-of-the-corpus} is used.
-As the ISCI Meeting Corpus has no recommended segmentation (see \cref{sec:icsi-corpus}), it is necessary to come up with an own data split.
-For this work, if a split is necessary, a random 70/15/15 was generated once and then used for all the experiments.
-The exact split used is shown in \cref{fig:icsi-split}
+As the ISCI Meeting Corpus has no recommended segmentation, the traditional test set and a randomly generated development set is used as described in \cref{sec:icsi-corpus}.
 
 % ===================
 % IMPLEMENTATION WITH TEXAR
