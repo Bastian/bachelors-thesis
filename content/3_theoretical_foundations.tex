@@ -251,7 +251,8 @@ What's new about BERT's architecture is mainly how it is trained and how the inp
 
 BERT's input tries to be applicable for many different natural language processing tasks.
 It allows the inputs of either one sentence or a pair of two sentences\footnote{In the context of BERT, a sentence does not refer to an actual linguistic sentence, but an arbitrary span of contiguous text \cite[p.~4]{devlin2018bert}}.
-Texts are tokenized by using WordPiece embeddings with a vocabulary of 30,000 tokens. % TODO Maybe explain the tokenization in more detail
+Texts are tokenized by using WordPiece embeddings with a vocabulary of 30,000 tokens. 
+WordPiece embedding have the advantage of not needing out-of-vocabulary tokens like the more traditional word embeddings.
 Every input sequence starts with a special \texttt{[CLS]} token and every sentence ends with a special \texttt{[SEP]} token.
 Additionally to the token embeddings, the input consists of two more types of embeddings.
 The first ones are learned segment embeddings, that indicate if a token belongs to the first or the second token.
@@ -275,7 +276,7 @@ For the simpler extractive summarization task, which is basically some kind of s
 \paragraph{Pre-Training Objectives}
 
 BERT is pre-trained with two different tasks \cite[p.~4--5]{devlin2018bert}.
-For the first task, the network is given a sentence with 15\% of its word piece tokens b randomly masked.
+For the first task, the network is given a sentence with 15\% of its word piece tokens being randomly masked.
 An example for masking is shown in \cref{fig:bert_masking_example}.
 
 % TODO Exact source is https://github.com/google-research/bert#what-is-bert
