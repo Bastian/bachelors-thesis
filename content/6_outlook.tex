@@ -7,9 +7,11 @@ Additionally, the larger BERT\textsubscript{LARGE} model should be tested, as du
 This can either be achieved by using hardware with more memory like Google's Cloud TPUs or implementing multi-GPU support.
 While multiple GPUs were not supported by BERT originally, there have been many successful attempts that use Uber's Horovod \cite{sergeev2018horovod} utilize multiple GPUs.
 
-% TODO Another topic for future reasearch: Find a way to use speaker information
+Another way to improve the networks performance, is to find a way to give the network access to speaker information and their roles.
+Currently, only concatenated dialogue acts or the plain transcript is used as input for the neural network, but in many cases it would be beneficial for the network to have additional information who said which sentences.
+With this information, it might be able generate sentences like "The project manager closed the meeting" without having to guess the information from the meetings context.
 
-To build a real end-to-end meeting summarizer, it is also necessary to automatically split a meeting transcript by topics.
+Finally, to build a real end-to-end meeting summarizer, it is also necessary to automatically split a meeting transcript by topics.
 The current topic split of AMI used in this work was created manually.
 Fortunately, plenty research on automatic topic segmentation has been conducted like \cite{10.3115/1075096.1075167} which specifically focuses on meetings.
 Such a topic segmentation algorithm can easily be applied to this work.
