@@ -11,21 +11,21 @@
 \centering
 \begin{tabular}{c|l|clll}
 \textbf{Variant}              & \textbf{Training Steps}                                                                   & \textbf{Metric} & \textbf{Pre} & \textbf{Rec} & \textbf{F} \\ \hline
-\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}8625 steps\\ (approx. 141 epochs)\end{tabular}} & \textbf{R-1}    & 0.3849       & 0.2952       & 0.3192     \\
-                              &                                                                                            & \textbf{R-2}    & 0.1718       & 0.1351       & 0.1428     \\
-                              &                                                                                            & \textbf{R-L}    & 0.3489       & 0.2701       & 0.2687     \\ \hline
-\multirow{3}{*}{\textbf{AAI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{IAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{III}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
-\multirow{3}{*}{\textbf{CCC}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-2}    & 0.01         & 0.02         & 0.03       \\
-                              &                                                                                            & \textbf{R-L}    & 0.01         & 0.02         & 0.03       \\ \hline
+\multirow{3}{*}{\textbf{AAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}8625 steps\\ (approx. 141 epochs)\end{tabular}} & \textbf{R-1}    & 38.49       & 29.52       & 31.92     \\
+                              &                                                                                            & \textbf{R-2}    & 17.18       & 13.51       & 14.28     \\
+                              &                                                                                            & \textbf{R-L}    & 34.89       & 27.01       & 26.87     \\ \hline
+\multirow{3}{*}{\textbf{AAI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
+\multirow{3}{*}{\textbf{IAA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
+\multirow{3}{*}{\textbf{III}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
+\multirow{3}{*}{\textbf{CCC}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
 \end{tabular}
 \caption{Rouge scores of the initial experiments}
 \label{tab:initial-experiment-rouge}
@@ -96,28 +96,6 @@ HS: The project manager will create a final report
 
 \section{Extended Experiments}
 
-% TODO Insert real values
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}clll@{}}
-\toprule
-\textbf{Metric} & \multicolumn{1}{c}{\textbf{Pre}} & \multicolumn{1}{c}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{F}} \\ \midrule
-\textbf{R-1}    & 0.3665                           & 0.3260                           & 0.3354                         \\
-\textbf{R-2}    & 0.1368                           & 0.1302                           & 0.1290                         \\
-\textbf{R-L}    & 0.3388                           & 0.3014                           & 0.2944                         \\ \bottomrule
-\end{tabular}
-\caption{Rouge scores of the extended experiments}
-\label{tab:extended-experiment-rouge}
-\end{table}
-
-For the extended experiments, the topic segmentation described in \cref{ssec:ami-annotations} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
-This results in one summary sentence for each topic of a meeting.
-By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
-For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus}, as there is no manual topic segmentation available for the ICSI Meeting Corpus. % TODO Maybe use the automatic segmentation with the automatic transcript?
-
-The achieved ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
-An example for a generated summary is shown in \cref{fig:extended-experiment-example}.
-
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
 the project manager gave an introduction to the goal of the
@@ -150,10 +128,60 @@ project manager closed the meeting.
 \label{fig:extended-experiment-example}
 \end{figure}
 
+% TODO Insert real values
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}clll@{}}
+\toprule
+\textbf{Metric} & \multicolumn{1}{c}{\textbf{Pre}} & \multicolumn{1}{c}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{F}} \\ \midrule
+\textbf{R-1}    & 36.65                           & 32.60                           & 33.54                         \\
+\textbf{R-2}    & 13.68                           & 13.02                           & 12.90                         \\
+\textbf{R-L}    & 33.88                           & 30.14                           & 29.44                         \\ \bottomrule
+\end{tabular}
+\caption{Rouge scores of the extended experiments}
+\label{tab:extended-experiment-rouge}
+\end{table}
+
+For the extended experiments, the topic segmentation described in \cref{ssec:ami-annotations} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
+This results in one summary sentence for each topic of a meeting.
+By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
+For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus}, as there is no manual topic segmentation available for the ICSI Meeting Corpus. % TODO Maybe use the automatic segmentation with the automatic transcript?
+
+An example for a generated summary is shown in \cref{fig:extended-experiment-example}.
+The achieved ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
+
 \paragraph{Comparison With Other Approaches}
 
-When just comparing the the plain ROUGE scores, the neural approach outperforms any of the existing unsupervised attempts for abstractive meeting summarization, like \cite{oya-etal-2014-template}, \cite{1609.07035} or \cite{shang-etal-2018-unsupervised}. % TODO List the results for these cited papers for easier comparison
-However, this comparison is not fair, as their approaches do only use the dialogue acts or transcripts to generate their summaries.
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+                       & \textbf{R-1}     & \textbf{R-2}     \\ \midrule
+\textbf{Neural (Ours)} & 33.54                & \underline{\textbf{12.90}} \\
+\textbf{Ref-A}         & \underline{\textbf{37.86}} & 7.84                 \\
+\textbf{Ref-B}         & 30.6                 & 6.8                  \\
+\textbf{Ref-C}         & 31.5                 & 6.7                  \\
+\textbf{Ref-D}         & 28.7                 & 4.2                  \\
+\textbf{Baseline}      & 28.32                & 8.48                 \\ \bottomrule
+\end{tabular}
+\caption{Comparison with different approaches for abstractive meeting summarization and a baseline}
+\label{tab:comparison}
+\end{table}
+
+Unfortunately, the used metrics to report results are very different and many of them are only reported for the AMI meeting corpus.
+Some researchers only report the ROUGE-1 and ROUGE-2 scores using the F1 measure, while others also report ROUGE-L or ROUGE-SU4 scores with recall, precision and F1 measures.
+For this reason, this thesis will only compare ROUGE-1 and ROUGE-2 scores using the F1 measure for the AMI corpus, as these scores are reported for nearly every approach.
+
+The results of this work's neural approach are compared with the following approaches for abstractive meeting summarization:
+\begin{itemize}
+\item The results from \cite{shang-etal-2018-unsupervised}, using their best performing approach on AMI (\textbf{Ref-A}).
+\item The results from \cite{oya-etal-2014-template}, using their 15 segment (\textbf{Ref-B}) and 20 segment system (\textbf{Ref-C}).
+\item The results from \cite{mehdad-etal-2013-abstractive}, using their full model (\textbf{Ref-D}).
+\end{itemize}
+
+These scores are listed in \cref{tab:comparison} together with the neural network's scores and a baseline that is described later in this section.
+When just comparing the plain ROUGE scores, the neural approach achieves competitive results for ROUGE-1 scores and surpasses the ROUGE-2 scores of any of the other approaches.
+However, this comparison is not fair, as the other approaches do only use the dialogue acts or transcripts to generate their summaries.
 While this is also true for the model of this work, it has access to the abstractive summaries of the training set during its training.
 Because all of AMI's scenario meetings have a very similar structure, the abstracts in the training data tend to be very similar to the abstracts in the test data set.
 This gives the network an unfair advantage over the other approaches and makes the results hardly comparable.
@@ -163,9 +191,9 @@ This gives the network an unfair advantage over the other approaches and makes t
 \begin{tabular}{@{}clll@{}}
 \toprule
 \textbf{Metric} & \multicolumn{1}{c}{\textbf{Pre}} & \multicolumn{1}{c}{\textbf{Rec}} & \multicolumn{1}{c}{\textbf{F}} \\ \midrule
-\textbf{R-1}    & 0.2625                           & 0.3264                           & 0.2832                         \\
-\textbf{R-2}    & 0.0788                           & 0.0992                           & 0.0848                         \\
-\textbf{R-L}    & 0.2384                           & 0.2957                           & 0.2440                         \\ \bottomrule
+\textbf{R-1}    & 26.25                           & 32.64                           & 28.32                         \\
+\textbf{R-2}    & 07.88                           & 09.92                           & 08.48                         \\
+\textbf{R-L}    & 23.84                           & 29.57                           & 24.40                         \\ \bottomrule
 \end{tabular}
 \caption{Rouge scores of random baseline}
 \label{tab:extended-experiment-rouge-random}
@@ -173,7 +201,9 @@ This gives the network an unfair advantage over the other approaches and makes t
 
 To still have a baseline that results can be compared to, one can just randomly pick a summary sentence from the training data for every topic.
 If the network is able to understand the meaning of its input, it should outperform this baseline.
-When comparing the network's scores shown in \cref{tab:extended-experiment-rouge} with this random baseline shown in \cref{tab:extended-experiment-rouge-random}, the results of the network indeed outperform the baseline by a significant margin.
+This baseline is also included in the comparison table \cref{tab:comparison} and all scores are also shown in \cref{tab:extended-experiment-rouge-random}.
+When comparing the network's scores with this baseline, the results of the network indeed outperform the baseline by a significant margin.
+The fact, that even this simple baseline achieves higher ROUGE-2 scores than any of the other unsupervised approaches is a clear indicator, that the access to the abstracts of the training data is indeed an unfair advantage.
 
 \paragraph{Issues with the generated summary}
 
