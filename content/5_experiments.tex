@@ -72,7 +72,8 @@ MS: the project manager will create a final report
 
 \Cref{fig:initial-experiment-example} shows two hand-picked examples of generated summaries, together with the input and the human summary.
 It is easily visible, that the network tends to overfit the data, as the generated summary contains information that is not part of the actual input, but can only be guessed if the settings of AMI's scenario meeting is taken into account \eg that the final report is always written by the project manager.
-This also explains the bad results for the AAI and IAA variations, as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
+This explains the bad results for the AAI and IAA variations, as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
+It is also a strong indicator that more training data is necessary for the network to learn to generalize, especially considering the very specific context of the AMI scenario meetings.
 
 However, the network is able to correctly interpret the context of a sentence and is -- at least to a certain degree -- able to generate new sentences.
 The generated summary from the first example is not present in the training data at all, but constructed from multiple different sentences.
