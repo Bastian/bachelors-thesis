@@ -26,6 +26,12 @@
 \multirow{3}{*}{\textbf{CCC}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
                               &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
                               &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
+\multirow{3}{*}{\textbf{CCA}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
+\multirow{3}{*}{\textbf{CCI}} & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}1234 steps\\ (approx. 12 epochs)\end{tabular}}  & \textbf{R-1}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-2}    & TODO         & TODO         & TODO       \\
+                              &                                                                                            & \textbf{R-L}    & TODO         & TODO         & TODO       \\ \hline
 \end{tabular}
 \caption{Rouge scores of the initial experiments}
 \label{tab:initial-experiment-rouge}
@@ -38,8 +44,10 @@ Results for the following combinations are reported:
 \item Trained on the AMI train data set, validated on the AMI eval data set, tested on the AMI test data set (\textbf{AAA})
 \item Trained on the AMI train data set, validated on the AMI eval data set, tested on the ICSI corpus (\textbf{AAI})
 \item Trained on the ICSI corpus, validated on the AMI eval data set, tested on the AMI test data set (\textbf{IAA})
-\item Trained, validated and tested on the ICSI corpus, using a 70/15/15 split (\textbf{III})
-\item Trained, validated and tested on a combined AMI and ICSI corpus, using a 70/15/15 split (\textbf{CCC})
+\item Trained, validated and tested on the ICSI corpus, using a the split described in \cref{sec:icsi-corpus} (\textbf{III})
+\item Trained, validated and tested on a combined AMI and ICSI corpus, with all the datasets being merged with the datasets of the other corpus\footnote{\Eg the combined train set is the AMI train set + the ICSI train set} (\textbf{CCC})
+\item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCA})
+\item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCI})
 \end{itemize}
 
 All the reported results were calculated on the test set.
