@@ -1,7 +1,7 @@
 \chapter{Data}\label{ch:data}
 
 For this work, two common corpora for meeting data are used, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin}.
-These two corpora are explained in this chapter in greated detail.
+These two corpora are explained in this chapter in greater detail.
 
 % ==============
 % AMI MEETING CORPUS
@@ -9,18 +9,18 @@ These two corpora are explained in this chapter in greated detail.
 
 \section{AMI Meeting Corpus}\label{sec:ami-meeting-corpus}
 
-The AMI Meeting Corpus is a corpus for meetings, published by the AMI (Augmented Multi-party Interaction) project in 2006 \cite{Mccowan05theami}.
+The AMI Meeting Corpus is a corpus for meetings, published by the AMI (Augmented Multi-Party Interaction) project in 2006 \cite{Mccowan05theami}.
 It contains very detailed annotations for 100 hours of meeting recordings.
-The relevant aspects and annotation of the AMI Meeting Corpus, that are relevant for this work, are explained below.
+The aspects and annotations of the AMI Meeting Corpus that are relevant for this work are explained below.
 
 \subsection{Scenario and Non-Scenario Meetings}
 
-The AMI Meeting Corpus contains data for two different types of meetings: Scenario meetings and non-scenario meetings.
-For this work, only the data from the scenario meetings are used, as the non-scenario meetings are missing some annotations\footnote{Mainly dialogue acts and abstractive summaries} that are necessary for this work.
-The following paragraphs describe the scenario of the scenario meetings.
+The AMI Meeting Corpus contains data for two different types of meetings: scenario and non-scenario meetings.
+For this work, only the data from the scenario meetings are used as the non-scenario meetings are missing several annotations\footnote{Mainly dialogue acts and abstractive summaries.} necessary for this research.
+The following paragraphs describe the scenario meetings.
 
-For the scenario meetings, participants play employees of an electronics company that work together on a project.
-They are part of a design team, which tries to develop a prototype for a television remote, because the existing ones are considered not user-friendly, unattractive and old-fashioned.
+For the scenario meetings, participants play employees of an electronics company who work together on a project.
+They are part of a design team trying to develop a prototype for a television remote because the existing ones are considered not user-friendly, unattractive, and old-fashioned.
 The participants are assigned one of the following roles:
 \begin{itemize}
 \item A project manager
@@ -29,17 +29,17 @@ The participants are assigned one of the following roles:
 \item An industrial designer
 \end{itemize}
 
-Each project consists of 4 meetings:
+Each project consists of four meetings:
 \begin{itemize}
 \item A project kick-off meeting
-\item A meeting for the functional design of the remote, such as user requirements, technical functionality and the working design
+\item A meeting for the functional design of the remote, such as user requirements, technical functionality, and the working design
 \item A meeting for the conceptual design of the remote's components, such as the materials or the user interface
-\item A final meeting to finalize the design and evaluate the results.
+\item A meeting to finalize the design and evaluate the results
 \end{itemize}
-Before each meetings, the participants perform individual work.
+Before each meeting, the participants perform individual work.
 
-In total, data for 35 of these projects is available, each with the 4 meetings. 
-Due to recording dropouts in two meetings, the total amount of scenario meetings is 138. \cite[p.~2]{Mccowan05theami}
+In total, data for 35 of these projects is available, each with the four meetings. 
+Due to recording dropouts in two meetings, the total number of scenario meetings is 138 \cite[p.~2]{Mccowan05theami}.
 
 \subsection{Annotations}\label{ssec:ami-annotations}
 
@@ -48,16 +48,15 @@ The following annotations are available and used in this work:
 \paragraph{Dialogue Acts}
 
 The transcription of the whole meeting is split into smaller pieces on a per-person basis.
-These subsets of the transcription are called "Dialogue Acts".
-A dialogue act tries to group words, that belong together to form a speaker's attention, e.g. a question.
+These subsets of the transcription are called dialogue acts.
+A dialogue act groups words that belong together to form a speaker's intention (e.g. a question).
 Every word of the transcription is part of exactly one dialogue act.
-Each dialogue act is classified by its content \footnote{\Eg one class for dialogue acts that are about information exchange \cite[p.~8]{guidelinesAmiDA}}, but this classification is not used in this work. \cite{amiWebsite}
+Each dialogue act is classified by its content,\footnote{For instance, one class for dialogue acts that are about information exchange \cite[p.~8]{guidelinesAmiDA}.} but this classification is not used in this work. \cite{amiWebsite}
 
 \paragraph{Topic Segmentation}
 
-Each meeting is split into multiple topics that by themselves may be split into subtopics.
-Examples for topics are "industrial designer presentation", "evaluation of prototype" or "project specs and roles of
-participants" just to name a few. \cite{amiWebsite}
+Each meeting is split into multiple topics that then may be split into subtopics.
+Examples of topics are "industrial designer presentation", "evaluation of prototype", and "project specs and roles of participants", just to name a few \cite{amiWebsite}.
 
 \paragraph{Abstractive Summaries}
 
@@ -72,18 +71,18 @@ S2: The project manager talked about the project finances and
 S3: The team then discussed various features to consider in making
     the remote.
 \end{lstlisting}
-\caption{Example abstract of abstractive summary for scenario meeting \texttt{ES2002a}.}
+\caption{Example of abstractive summary for scenario meeting \texttt{ES2002a}.}
 \label{fig:abstractive-summary-example}
 \end{figure}
 
 For each scenario meeting, abstractive summaries are available.
-Each abstractive summary consists of an abstract, decisions, problems/issues and actions.
-Usually, the abstract consists of multiple sentences.
-An example for such an abstract with 3 sentences is shown in \cref{fig:abstractive-summary-example}.
+Each abstractive summary consists of an abstract, decisions, problems/issues, and actions.
+The abstract usually consists of multiple sentences.
+An example of such an abstract with three sentences is shown in \cref{fig:abstractive-summary-example}.
 
-Additionally, for each sentence of the abstractive summary, one or more dialogue acts are selected, that are linked together.
-These dialogue acts are the ones, that had the most influence on the summary sentence.
-This mapping of $n$ dialogue acts to $1$ sentence of the summary is later used for training, as described in \cref{sec:system-description-training} in more detail. \cite{amiWebsite}
+Additionally, for each sentence of the abstractive summary, one or more dialogue acts are selected that are linked together.
+These dialogue acts are the ones that had the most influence on the summary sentence.
+This mapping of $n$ dialogue acts to one sentence of the summary is later used for training, as further described in \cref{sec:system-description-training} \cite{amiWebsite}.
 
 \subsection{Segmentation of the Corpus}\label{ssec:ami-segmentation-of-the-corpus}
 
@@ -96,14 +95,14 @@ Training                         & approx. 50 hours                  & 98 meetin
 Development                      & approx. 11 hours                  & 20 meetings   \\
 Test                             & approx. 11 hours                  & 20 meetings   \\ \bottomrule
 \end{tabular}
-\caption[Distribution of train, dev and test sets]{Distribution of train, dev and test sets \cite{amiWebsite}.}
+\caption[Distribution of train, dev and test sets]{Distribution of training, development, and test sets \cite{amiWebsite}}
 \label{tab:meeting-time-distribution}
 \end{table}
 
-To make results comparable with other works that use the corpus, it is split into training, development and test sets.
+To make results comparable with other works that use the corpus, the corpus is split into training, development, and test sets.
 The training set is the data that a system is allowed to see during training.
 The development set can be used to automatically monitor results during training, while the test set is only used in the end to report final results.
-For the scenario meetings, the data distribution is shown in \cref{tab:meeting-time-distribution}. \cite{amiWebsite}
+For the scenario meetings, the data distribution is shown in \cref{tab:meeting-time-distribution} \cite{amiWebsite}.
 
 % ==============
 % ICSI MEETING CORPUS
@@ -112,27 +111,27 @@ For the scenario meetings, the data distribution is shown in \cref{tab:meeting-t
 \section{ICSI Meeting Corpus}\label{sec:icsi-corpus}
 
 The ICSI Meeting Corpus contains meetings that were collected at the International Computer Science Institute (ICSI) over a period of three years.
-It has data for about 72 hours of meeting recordings. \cite{Janin}
+It has data for about 72 hours of meeting recordings \cite{Janin}.
 
-As it has a very similar structure than the AMI Meeting corpus described in \cref{sec:ami-meeting-corpus}, this section will only focus on their differences that are relevant for this work.
-Annotations that are the same for both meetings like dialogue acts or abstractive summaries are not mentioned explicitly.
+As it has a very similar structure to the AMI Meeting Corpus described in \cref{sec:ami-meeting-corpus}, this section only focuses on their differences that are relevant for this work.
+Annotations that are the same for both meetings, like dialogue acts or abstractive summaries, are not mentioned explicitly.
 
 \paragraph{Scenario}
 
 Unlike the scenario meetings of the AMI Meeting Corpus, the ICSI Meeting Corpus has natural meetings that do not cover a specific topic or artificial scenario.
-However, as the meetings are all recorded at the International Computer Science Institute, they usually follow a specific type.
-Because of this, every meeting of the corpus is classified as on one of 5 different meeting types \cite{Janin}:
+However, as the meetings are all recorded at the ICSI, they usually follow a specific type.
+Because of this, every meeting of the corpus is classified as one of five different types \cite{Janin}:
 \begin{itemize}
-\item \textbf{Even Deeper Understanding}: Discussions about natural language processing and neural theoris of language
+\item \textbf{Even Deeper Understanding}: Discussions about natural language processing and neural theories of language
 \item \textbf{Meeting Recorder}: Meetings about the ICSI Meeting Corpus
-\item \textbf{Robustness}: Mettings about methods on how to compensate for envorimental issues in speech recognition like noise or reverberations
-\item \textbf{Network Services and Applications}: Meetings from groups that research internet architectures, standards and related networking issues
-\item \textbf{Other one-time only meetings}
+\item \textbf{Robustness}: Meetings about methods on how to compensate for environmental issues in speech recognition like noise or reverberations
+\item \textbf{Network Services and Applications}: Meetings from groups that research internet architectures, standards, and related networking issues
+\item \textbf{Other One-Time Only Meetings}
 \end{itemize}
 
 \paragraph{Topic Segmentation Annotation}
 
-For the ICSI Meeting Corpus, only automatic topic segmentation is available, but no manual segmentation like for the AMI Meeting Corpus.
+For the ICSI Meeting Corpus, only automatic topic segmentation is available but no manual segmentation like for the AMI Meeting Corpus.
 % TODO This paragraph is too short
 
 \paragraph{Segmentation of the Corpus}
@@ -149,12 +148,14 @@ TRAIN: Bdb001, Bed002, Bed003, Bed005, Bed006, Bed008, Bed010,
 DEV:   Bmr018, Bns001, Bro008, Bro025, Bro026, Buw001
 TEST:  Bed004, Bed009, Bed016, Bmr005, Bmr019, Bro018
 \end{lstlisting}
-\caption{The exact data split used for the ICSI Meeting Corpus.}
+\caption{The exact data split used for the ICSI Meeting Corpus}
 \label{fig:icsi-split}
 \end{figure}
 
-Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development and test sets.
-However, the traditional test set consists of six meetings, namely Bed\{004,009,016\}, Bmr\{005,019\} and Bro018 \cite{inproceedings}.
-For the development set, this work uses six randomly chosen meetings, namely Bmr018, Bns001, Bro\{008, 025, 026\} and Buw001.
+Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development, and test sets.
+However, the traditional test set consists of six meetings: Bed\{004,009,016\}, Bmr\{005,019\}, and Bro018 \cite{inproceedings}.
+For the development set, this work uses six randomly chosen meetings: Bmr018, Bns001, Bro\{008, 025, 026\}, and Buw001.
 The remaining meetings are part of the training data set.
-The full list of the data split shown in \cref{fig:icsi-split}.
+The full list of the data split is shown in \cref{fig:icsi-split}.
+
+% TODO Either summarize this chapter or add brief introduction of the next chapter
