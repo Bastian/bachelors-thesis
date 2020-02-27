@@ -2,12 +2,11 @@
 
 % Motivation
 
-Transfer Learning is known to improve results on many different machine learning tasks.
-Google's recently announced language representation model BERT broke records for many Natural Language Processing benchmarks \cite[p.~5--7]{devlin2018bert}, such as  SQuAD v1.1 \cite{rajpurkar-etal-2016-squad} or GLUE \cite{1804.07461}.
-There have been some attempts to apply BERT to the problem of abstractive summarization, like \cite{1902.09243} and \cite{1908.08345}.
-However, they are usually trained and tested on news articles.
-Generating abstractive summaries of meetings is only a rarely researched topic.
-Most of the research for summarizing meetings has been focused on either extractive summarization or unsupervised approaches such as Dependency Graph Fusion \cite{1609.07035} or Multi-Sentence Compression \cite{shang-etal-2018-unsupervised}.
+Transfer Learning is known to improve results on a significant number and variation of machine learning tasks.
+For instance, Google's recently announced language-representation model, Bidirectional Encoder Representations from Transformers (BERT), broke records for many natural language processing benchmarks \cite[p.~5--7]{devlin2018bert} such as  SQuAD v1.1 \cite{rajpurkar-etal-2016-squad} and GLUE \cite{1804.07461}.
+There have also been attempts to apply BERT to the problem of abstractive summarization(\cite{1902.09243} and \cite{1908.08345}); however, they are usually trained and tested on news articles.
+Generating abstractive summaries of meetings---the focus of this thesis---is a rarely researched topic. % TODO Maybe briefly explain what abstractive summaries are
+Indeed, most of the research on summarizing meetings has been focused on either extractive summarization or unsupervised approaches such as dependency graph fusion \cite{1609.07035} or multi-sentence compression \cite{shang-etal-2018-unsupervised}.
 
 % ==============
 % PROBLEM DEFINITION
@@ -15,13 +14,13 @@ Most of the research for summarizing meetings has been focused on either extract
 
 \section{Problem Definition}
 
-When trying to generate abstractive summaries of meetings with deep learning, you usually run into two problems: The small amount of available training data and the very long transcripts of meetings \cite[p.~650--651]{10.1007/978-3-030-20521-8_53}.
-The small amount of training data makes it very hard for a neural network to properly learn, as deep learning approaches tend to need a lot of data to produce good results.
-The long transcripts of meetings are a problem, as modern sequence-to-sequence architectures either struggle to learn long range dependencies \cite{Hochreiter01gradientflow} or have unreasonably high memory requirements for long sequence length.
-The goal of this work is to analyze, if a data driven approach is still feasible.
-BERT should be used to utilize Transfer Learning and thus limit the amount of required training data to achieve good results.
-Additionally, a method should be developed, that deals with the problem of long sequence length.
-This is especially crucial when using BERT which was only pre-trained with sequence length of 512 \cite[p.~13]{devlin2018bert} which is way shorter than a typical meeting transcript.
+When generating abstractive summaries of meetings with deep learning, one usually faces two problems: the small amount of available training data and the very long transcripts of meetings \cite[p.~650--651]{10.1007/978-3-030-20521-8_53}.
+The former makes it difficult for a neural network to properly learn as deep learning approaches tend to need a large amount of data to produce good results.
+The long transcripts are a problem as modern sequence-to-sequence architectures either struggle to learn long range dependencies \cite{Hochreiter01gradientflow} or have unreasonably high memory requirements for long sequence length.
+The goal of this work is therefore to analyze if a data-driven approach is still feasible. % Approach to what
+Specifically, BERT should be utilized for transfer learning and thus limit the amount of required training data to achieve good results.
+Additionally, a method should be developed to address the issue of long sequence length.
+This is especially crucial when using BERT, which was only pretrained with a sequence length of 512 \cite[p.~13]{devlin2018bert}, much shorter than a typical meeting transcript.
 
 % ======
 % METHOD
@@ -30,9 +29,9 @@ This is especially crucial when using BERT which was only pre-trained with seque
 \section{Method}
 
 As part of this work, a network is developed that utilizes BERT and is fine-tuned for abstractive meeting summarization.
-It is trained with data from the two most commonly used meeting corpora, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin} that are described in \cref{ch:data}.
-To validate the results, automatic evaluation using ROUGE\footnote{ROUGE is explained in \cref{ssec:automatic-evaluation}} is performed and the achieved scores are then compared with scores from other approaches for abstractive meeting summarization.
-Additionally, cross-corpus validation\footnote{\Eg training on the ICSI corpus and testing on the AMI corpus} is performed to evaluate if the network is able to generalize what it learned.
+It is trained with data from the two most commonly used meeting corpora, the AMI Meeting Corpus \cite{Mccowan05theami} and the ICSI Meeting Corpus \cite{Janin}, which are described in \cref{ch:data}.
+To validate the results, automatic evaluation using Recall-Oriented Understudy for Gisting Evaluation (ROUGE)\footnote{ROUGE is explained in \cref{ssec:automatic-evaluation}.} is performed, and the achieved scores are then compared with scores from other approaches for abstractive meeting summarization.
+Additionally, cross-corpus validation\footnote{For example, training on the ICSI corpus and testing on the AMI corpus.} is performed to evaluate if the network can generalize what it learned.
 
 % =================
 % THESIS OUTLINE
@@ -40,12 +39,12 @@ Additionally, cross-corpus validation\footnote{\Eg training on the ICSI corpus a
 
 \section{Thesis Outline}
 
-\Cref{ch:data} introduces the two used meeting corpora which are used to train the network.
-\Cref{ch:theoretical-foundations} explains the theoretical foundations that are necessary for this work.
+\Cref{ch:data} introduces the two meeting corpora used to train the network.
+\Cref{ch:theoretical-foundations} explains the theoretical foundations necessary for this work.
 \Cref{ch:system-description} describes the model architecture of the network used in this thesis.
-It also explains, how the network was trained and what steps were performed to prepare the training data.
-Additionally, it focuses on the actual implementation with the Texar library \cite{hu2019texar} and what hyperparameters where used for training.
-\Cref{ch:experiments} presents the experiments that were performed on the network and what scores it achieved compared to other summarization approaches and a simple baseline.
-It also provides some hand-picked example outputs.
+It also explains how the network was trained and what steps were performed to prepare the training data.
+Additionally, it focuses on the actual implementation with the Texar library \cite{hu2019texar} and what hyperparameters were used for training.
+\Cref{ch:experiments} presents the experiments performed on the network and what scores it achieved compared to other summarization approaches and a simple baseline.
+It also provides several hand-picked example outputs.
 \Cref{ch:outlook} gives an outlook for possible future research.
-Finally, \cref{ch:summary-and-conclusion} summarizes the results of the work and draws a conclusion how they can be interpreted.
+Finally, \cref{ch:summary-and-conclusion} summarizes the results of the work and draws a conclusion on how they can be interpreted.
