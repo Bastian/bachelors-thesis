@@ -1,17 +1,17 @@
 \chapter{Outlook}\label{ch:outlook}
 
-During the creation of this thesis, many new language models inspired by BERT have been released, like ALBERT \cite{1909.11942}, RoBERTa \cite{1907.11692} and many more.
-These models claim to either achieve better results, have smaller model sizes or both.
-It might be worth to investigate, if swapping out BERT with one of these newer models improves the results and if yes by how much.
-Additionally, the larger BERT\textsubscript{LARGE} model should be tested, as due to memory constrains only the smaller BERT\textsubscript{BASE} model was used in this work.
+During the creation of this thesis, numerous new language models inspired by BERT have been released, like ALBERT \cite{1909.11942}, RoBERTa \cite{1907.11692}, and many more.
+These models claim to either achieve better results or have smaller model sizes, or both.
+Thus, it might be worth investigating if swapping out BERT with one of these newer models improves the results and if so, by how much.
+Additionally, the larger BERT\textsubscript{LARGE} model should be tested as due to memory constraints only the smaller BERT\textsubscript{BASE} model was used in this work.
 This can either be achieved by using hardware with more memory like Google's Cloud TPUs or implementing multi-GPU support.
-While multiple GPUs were not supported by BERT originally, there have been many successful attempts that use Uber's Horovod \cite{sergeev2018horovod} utilize multiple GPUs.
+While multiple GPUs were not supported by BERT originally, there have been many successful attempts that use Uber's Horovod \cite{sergeev2018horovod} to utilize multiple GPUs.
 
-Another way to improve the networks performance, is to find a way to give the network access to speaker information and their roles.
-Currently, only concatenated dialogue acts or the plain transcript is used as input for the neural network, but in many cases it would be beneficial for the network to have additional information who said which sentences.
-With this information, it might be able generate sentences like "The project manager closed the meeting" without having to guess the information from the meetings context.
+Another way to improve the network's performance is to find a way to give the network access to speakers' information and their roles.
+Currently, only concatenated dialogue acts or the plain transcript is used as input for the neural network, but in many cases, it would be beneficial for the network to have additional information about who said which sentences.
+With this information, it might generate sentences like "The project manager closed the meeting" without having to guess the information from the meeting's context.
 
 Finally, to build a real end-to-end meeting summarizer, it is also necessary to automatically split a meeting transcript by topics.
 The current topic split of AMI used in this work was created manually.
-Fortunately, plenty research on automatic topic segmentation has been conducted like \cite{10.3115/1075096.1075167} which specifically focuses on meetings.
+Fortunately, plenty of research on automatic topic segmentation has been conducted like \cite{10.3115/1075096.1075167}, which specifically focuses on meetings.
 Such a topic segmentation algorithm can easily be applied to this work.
