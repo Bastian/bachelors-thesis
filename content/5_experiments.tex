@@ -52,9 +52,11 @@ Results for the following combinations are reported:
 
 All the reported results were calculated on the test set.
 
-Training took, on average, less than one hour on a single GeForce RTX 2080 Ti GPU.
+A single training step took, on average, about $0.41$ seconds on a single GeForce RTX 2080 Ti GPU which in turn results in a training time of about one hour for the fastest variant (AAA) and three hours for the slowest variant (CCC).
 The achieved ROUGE scores are shown in \cref{tab:initial-experiment-rouge}.
-While the results for AAA, III, CCC are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
+While the results for AAA, CCC, and CCA are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
+The network also achieves way worse results on the more diversified ICSI Meeting Corpus compared to the AMI Meeting Corpus with its narrow scenario.
+Training the network on both corpora does not improve the test results for a single corpus.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
@@ -85,7 +87,7 @@ It is also a strong indicator that more training data is necessary for the netwo
 
 However, the network is able to correctly interpret the context of a sentence and is---at least to a certain degree---able to generate new sentences.
 The generated summary from the first example is not present in the training data at all but constructed from multiple different sentences.
-The generated summary from the second example is identical to a human summary that was used for training but for another input.
+The generated summary from the second example in \cref{fig:initial-experiment-example} is identical to a human summary that was used for training but for another input.
 This human summary with the matching dialogue act in the training dataset is shown in \cref{fig:initial-experiment-training-example}.
 However, the second example is the much more common case, and the network does not generate new sentences very often but only copies them from the training examples.
 By reducing the number of training steps, the network tends to generate own sentences more often but at the cost of lower scores.
