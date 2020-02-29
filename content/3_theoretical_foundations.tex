@@ -277,8 +277,6 @@ BERT is pretrained with two different tasks \cite[p.~4--5]{devlin2018bert}.
 For the first task, the network is given a sentence with 15\% of its WordPiece tokens randomly masked.
 An example of masking is shown in \cref{fig:bert_masking_example}.
 
-% TODO Exact source is https://github.com/google-research/bert#what-is-bert
-% TODO I need to ask my prof if the current mentioning of the GitHub page is enough
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
 Input: the man went to the [MASK1] . he bought a [MASK2] of milk.
@@ -295,8 +293,6 @@ For the second task, the network is given two sentences.
 The network must then predict if the second of these two sentences comes after the first one in the original text or if it is just a randomly selected sentence from any other text.
 An example of next-sentence prediction is shown in \cref{fig:bert_next_sentence_example}.
 
-% TODO Exact source is https://github.com/google-research/bert#what-is-bert
-% TODO I need to ask my prof if the current mentioning of the GitHub page is enough
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
 Sentence A: the man went to the store .
