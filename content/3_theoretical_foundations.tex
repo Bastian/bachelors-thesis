@@ -1,7 +1,7 @@
 \chapter{Theoretical Foundations}\label{ch:theoretical-foundations}
 
 This chapter explains the theoretical foundations that are necessary to understand the neural network that was developed in this work.
-It first explains how a machine learns from data following with an introduction of a specific neural network architecture, the Transformer.
+It first describes how a machine learns from data following with an introduction of a specific neural network architecture, the Transformer.
 Finally, a language model based on Transformers is introduced.
 
 % ===============
@@ -80,7 +80,7 @@ To report the results achieved in this thesis, the following three metrics are u
 
 When comparing word overlap, one must differentiate between recall and precision \cite{Ting2010}.
 While recall indicates how much information of the reference summary is present in the candidate summary, precision indicates how much of the information in the candidate summary is actually present in the reference summary.
-It is common to combine these two measures to a single one, called F1-measure.
+It is common to combine these two measures to a single one, called F1 measure.
 It is calculated by the following formula:
 \[
 	F_1 = 2 \cdot \frac{Recall \cdot Precision}{Recall + Precision}
@@ -248,7 +248,7 @@ What is innovative about BERT's architecture is mainly how it is trained and how
 \paragraph{Input and Output Representations}
 
 BERT's input is applicable to many different natural language processing tasks.
-It allows the inputs of either one sentence or a pair of two sentences.\footnote{In the context of BERT, a sentence does not refer to an actual linguistic sentence, but an arbitrary span of contiguous text \cite[p.~4]{devlin2018bert}.}
+It allows the inputs of either one sentence or a pair of two sentences.\footnote{In the context of BERT, a sentence does not refer to an actual linguistic sentence but an arbitrary span of contiguous text \cite[p.~4]{devlin2018bert}.}
 Texts are tokenized by using WordPiece embeddings with a vocabulary of 30,000 tokens. 
 WordPiece embeddings have the advantage of not needing out-of-vocabulary tokens like the more traditional word embeddings.
 Every input sequence starts with a special \texttt{[CLS]} token, and every sentence ends with a special \texttt{[SEP]} token.
