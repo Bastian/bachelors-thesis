@@ -9,7 +9,7 @@ These two corpora are explained in this chapter in greater detail.
 
 \section{AMI Meeting Corpus}\label{sec:ami-meeting-corpus}
 
-The AMI Meeting Corpus is a corpus for meetings, published by the AMI (Augmented Multi-Party Interaction) project in 2006 \cite{Mccowan05theami}.
+The AMI Meeting Corpus is a corpus for meetings, published by the Augmented Multi-Party Interaction (AMI) project in 2006 \cite{Mccowan05theami}.
 It contains very detailed annotations for 100 hours of meeting recordings.
 The aspects and annotations of the AMI Meeting Corpus that are relevant for this work are explained below.
 
@@ -51,7 +51,7 @@ The transcription of the whole meeting is split into smaller pieces on a per-per
 These subsets of the transcription are called dialogue acts.
 A dialogue act groups words that belong together to form a speaker's intention (e.g. a question).
 Every word of the transcription is part of exactly one dialogue act.
-Each dialogue act is classified by its content,\footnote{For instance, one class for dialogue acts that are about information exchange \cite[p.~8]{guidelinesAmiDA}.} but this classification is not used in this work. \cite{amiWebsite}
+Each dialogue act is classified by its content,\footnote{For instance, one class for dialogue acts that are about information exchange \cite[p.~8]{guidelinesAmiDA}.} but this classification is not used in this work \cite{amiWebsite}.
 
 \paragraph{Topic Segmentation}
 
@@ -95,7 +95,7 @@ Training                         & approx. 50 hours                  & 98 meetin
 Development                      & approx. 11 hours                  & 20 meetings   \\
 Test                             & approx. 11 hours                  & 20 meetings   \\ \bottomrule
 \end{tabular}
-\caption[Distribution of train, dev and test sets]{Distribution of training, development, and test sets \cite{amiWebsite}}
+\caption[Distribution of training, development, and test sets]{Distribution of training, development, and test sets \cite{amiWebsite}}
 \label{tab:meeting-time-distribution}
 \end{table}
 
@@ -153,7 +153,7 @@ TEST:  Bed004, Bed009, Bed016, Bmr005, Bmr019, Bro018
 \end{figure}
 
 Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development, and test sets.
-However, the traditional test set consists of six meetings: Bed\{004,009,016\}, Bmr\{005,019\}, and Bro018 \cite{inproceedings}.
+However, the traditional test set consists of six meetings: Bed\{004, 009, 016\}, Bmr\{005, 019\}, and Bro018 \cite{inproceedings}.
 For the development set, this work uses six randomly chosen meetings: Bmr018, Bns001, Bro\{008, 025, 026\}, and Buw001.
 The remaining meetings are part of the training data set.
 The full list of the data split is shown in \cref{fig:icsi-split}.
