@@ -14,7 +14,7 @@ Finally, the exact hyperparameters that were used are described.
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.7\paperwidth]{figures/summarization-architecture}
-\caption{Visualization of the model architecture.}
+\caption{Visualization of the model architecture}
 \label{fig:summarization-architecture}
 \end{figure}
 
@@ -68,10 +68,10 @@ This section describes how the data of the two used corpora introduced in \cref{
 \paragraph{Format of the Corpus Data}
 
 The corpus data for both the AMI Meeting Corpus and the ICSI Meeting Corpus is available in the NITE XML Toolkit (NXT) format \cite{Carletta2003}.
-For automatic parsing, a Java library is available that makes it possible to write a Java program that traverses through the data and collects the necessary data.
+For automatic parsing, a Java library is available that makes it possible to write a Java program that traverses through the corpora and collects the necessary data.
 For this work, such a program was developed.
 
-It parses the data of the corpora and creates files than are easier to further process compared to the complex NXT format.
+It parses the data of the corpora and creates files that are easier to further process compared to the complex NXT format.
 For training, three tab-separated-values (.tsv) files are created, one for each dataset (training, development, test).
 For generating the final summary, it creates a text file for each meeting.
 The text file contains the transcripts of the meeting split by topic, with each topic-transcript starting in a new line.
@@ -123,7 +123,7 @@ For the actual implementation of the network, the Texar toolkit \cite{hu2019texa
 Texar is an open-source modular toolkit that provides plenty of useful abstractions for fast prototyping of neural network architectures with a special focus on natural language processing.
 It comes in two nearly identical versions, one for TensorFlow \cite{tensorflow2015-whitepaper} and one for PyTorch \cite{NEURIPS2019_9015}.  
 For this work, the TensorFlow version is used.
-Texar comes with modules for both BERT and regular Transformers and allows for an easy connection of BERT and a Transformer decoder.
+Texar has modules for both BERT and regular Transformers and allows for an easy connection of BERT and a Transformer decoder.
 The code for the complete architecture is only a few hundred lines of code.
 Nearly every hyperparameter, like the number of decoder layers, number of attention heads or just simple settings like the learning rate, can easily be modified.
 As an example, the hyperparameter configuration for the Transformer decoder is shown in \cref{lst:hyperparameters-decoder}.
