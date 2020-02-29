@@ -47,9 +47,9 @@ Results for the following combinations are reported:
 \begin{itemize}
 \item Trained on the AMI train dataset, validated on the AMI eval dataset, tested on the AMI test dataset (\textbf{AAA})
 \item Trained on the AMI train dataset, validated on the AMI eval dataset, tested on the ICSI corpus (\textbf{AAI})
-\item Trained on the ICSI train dataset, validated on the ICSI eval dataset, tested on the AMI test dataset (\textbf{IAA})
 \item Trained, validated, and tested on the ICSI corpus, using a the split described in \cref{sec:icsi-corpus} (\textbf{III})
-\item Trained, validated, and tested on a combined AMI and ICSI corpus, with all the datasets being merged with the datasets of the other corpus\footnote{\Eg the combined train set is the AMI train set + the ICSI train set} (\textbf{CCC})
+\item Trained on the ICSI train dataset, validated on the ICSI eval dataset, tested on the AMI test dataset (\textbf{IIA})
+\item Trained, validated, and tested on a combined AMI and ICSI corpus, with all the datasets being merged with the datasets of the other corpus\footnote{\Eg\ the combined train set is the AMI train set + the ICSI train set} (\textbf{CCC})
 \item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCA})
 \item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCI})
 \end{itemize}
@@ -64,19 +64,19 @@ Training the network on both corpora does not improve the test results for a sin
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
-DA: [CLS] and lea l delivered standard with a fruity colour, but
-    not too not too much. but, the mai i think th the standard
-    must be some kind of attractive flashy colours. so i think it
-    will be a better idea to have some flashy fruity colours as as
-    a standard, and for the people who really want a more
+DA: and lea l delivered standard with a fruity colour, but not too
+    not too much. but, the mai i think th the standard must be
+    some kind of attractive flashy colours. so i think it will be 
+    a better idea to have some flashy fruity colours as as a
+    standard, and for the people who really want a more
     sophisticated, more traditional look, they're willing to pay
-    that. [SEP]
+    that. 
 HS: the remote will come in fruity colours as standard with the
     option of buying different exchangeable covers.
 GS: the remote will be made of fruity colors.
 ------------------------------------------------------------------
-DA: [CLS] that's that's what i'm gonna write b between now. i'm
-    going to finish my end report. [SEP]
+DA: that's that's what i'm gonna write b between now. i'm going
+    to finish my end report.
 HS: the project manager will finish the final report.
 MS: the project manager will create a final report
 \end{lstlisting}
@@ -85,13 +85,13 @@ MS: the project manager will create a final report
 \end{figure}
 
 \Cref{fig:initial-experiment-example} shows two hand-picked examples of generated summaries together with the input and the human summary.
-It is easily noticeable that the network tends to overfit the data as the generated summary contains information that is not part of the actual input but can only be guessed if the settings of AMI's scenario meeting is taken into account (\eg, that the final report is always written by the project manager).
+It is easily noticeable that the network tends to overfit the data as the generated summary contains information that is not part of the actual input but can only be guessed if the setting of AMI's scenario meetings is taken into account (\eg, that the final report is always written by the project manager).
 This explains the bad results for the AAI and IAA variations as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
 It is also a strong indicator that more training data is necessary for the network to learn to generalize, especially considering the very specific context of the AMI scenario meetings.
 
 However, the network is able to correctly interpret the context of a sentence and is---at least to a certain degree---able to generate new sentences.
-The generated summary from the first example is not present in the training data at all but constructed from multiple different sentences.
-The generated summary from the second example in \cref{fig:initial-experiment-example} is identical to a human summary that was used for training but for another input.
+The generated summary from the first example in \cref{fig:initial-experiment-example} is not present in the training data at all but constructed from multiple different sentences.
+The generated summary from the second example is identical to a human summary that was used for training but for another input.
 This human summary with the matching dialogue act in the training dataset is shown in \cref{fig:initial-experiment-training-example}.
 However, the second example is the much more common case, and the network does not generate new sentences very often but only copies them from the training examples.
 By reducing the number of training steps, the network tends to generate own sentences more often but at the cost of lower scores.
@@ -184,7 +184,7 @@ The achieved ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
 
 The metrics used to report results are very different, and many of them are only reported for the AMI Meeting Corpus.
 Some researchers only report the ROUGE-1 and ROUGE-2 scores using the F1 measure, while others also report ROUGE-L or ROUGE-SU4 scores with recall, precision, and F1 measures.
-For this reason, this thesis only compares ROUGE-1 and ROUGE-2 scores using the F1 measure for the AMI corpus as these scores are reported for nearly every approach.
+For this reason, this thesis only compares ROUGE-1 and ROUGE-2 scores using the F1 measure for the AMI Meeting Corpus as these scores are reported for nearly every approach.
 
 The results of this work's neural approach are compared to the following approaches for abstractive meeting summarization:
 \begin{itemize}
@@ -217,7 +217,7 @@ To still have a baseline that results can be compared to, one can randomly pick 
 If the network is able to understand the meaning of its input, it should outperform this baseline.
 This baseline is also included in the comparison \cref{tab:comparison}, and all scores are also shown in \cref{tab:extended-experiment-rouge-random}.
 When comparing the network's scores with this baseline, the results of the network indeed outperform the baseline by a significant margin.
-The fact that even this simple baseline achieves higher ROUGE-2 scores than any of the other unsupervised approaches is a clear indicator that the access to the abstracts of the training data is indeed an unfair advantage.
+The fact that even this simple baseline achieves higher ROUGE-2 scores than any of the unsupervised approaches is a clear indicator that the access to the abstracts of the training data is indeed an unfair advantage.
 
 \paragraph{Issues with the Generated Summary}
 
