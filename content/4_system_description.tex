@@ -10,13 +10,6 @@ Finally, the exact hyperparameters that were used are described.
 % ===============
 
 \section{Model Architecture}
- 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\paperwidth]{figures/summarization-architecture}
-\caption{Visualization of the model architecture}
-\label{fig:summarization-architecture}
-\end{figure}
 
 The architecture of the model used in this work is rather straightforward.
 For the encoding part, BERT is used, and for decoding, a normal Transformer decoder is used.
@@ -26,12 +19,26 @@ As described in \cref{sec:bert}, BERT allows either one or two sentence\footnote
 For this work, only one sentence is used as there is no need (and logical way) to split the input into two parts.
 The Transformer decoder performs attentions over the full output representations of the encoder.
 The full architecture is shown in \cref{fig:summarization-architecture}.
+ 
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\paperwidth]{figures/summarization-architecture}
+\caption{Visualization of the model architecture}
+\label{fig:summarization-architecture}
+\end{figure}
 
 % ================
 % TRAINING AND CONCEPT
 % ================
 
 \section{Training and Concept}\label{sec:system-description-training}
+
+To circumvent the high memory usage of BERT at long sequence lengths, the whole meeting transcript is not used as input for the network at once.
+As described in \cref{sec:ami-meeting-corpus}, for every sentence in a meeting's abstractive summary, there exists a link to one or more dialogue acts.
+These are the dialogue acts that influence the content of the sentence the most.
+An example of such a link is shown in \cref{fig:dialogue-arc-summary-link-example}.
+For training, all of these dialogue acts that belong to the same summary sentence are concatenated and then used as the source for the summary.
+The summary sentence itself is used as the target summary.
 
 % TODO I'm pretty sure that there are better examples, but for now this is fine
 \begin{figure}[h]
@@ -45,13 +52,6 @@ SUM: They close the meeting by thanking one another.
 \caption[Three dialogue acts that are linked to one sentence of the summary]{Three dialogue acts (DA1--3) that are linked to one sentence of the summary (SUM)}
 \label{fig:dialogue-arc-summary-link-example}
 \end{figure}
-
-To circumvent the high memory usage of BERT at long sequence lengths, the whole meeting transcript is not used as input for the network at once.
-As described in \cref{sec:ami-meeting-corpus}, for every sentence in a meeting's abstractive summary, there exists a link to one or more dialogue acts.
-These are the dialogue acts that influence the content of the sentence the most.
-An example of such a link is shown in \cref{fig:dialogue-arc-summary-link-example}.
-For training, all of these dialogue acts that belong to the same summary sentence are concatenated and then used as the source for the summary.
-The summary sentence itself is used as the target summary.
 
 During training, the network was evaluated on the development data set every 75 steps.
 If the network improved its score, this model was saved.
@@ -95,7 +95,16 @@ As the ISCI Meeting Corpus has no recommended segmentation, the traditional test
 
 \section{Implementation with Texar}
 
-\begin{lstlisting}[numbers=none,language=Python,caption={Hyperparameters for Transformer decoder},captionpos=b,label=lst:hyperparameters-decoder]
+For the actual implementation of the network, the Texar toolkit \cite{hu2019texar} is used.
+Texar is an open-source modular toolkit that provides plenty of useful abstractions for fast prototyping of neural network architectures with a special focus on natural language processing.
+It comes in two nearly identical versions, one for TensorFlow \cite{tensorflow2015-whitepaper} and one for PyTorch \cite{NEURIPS2019_9015}.  
+For this work, the TensorFlow version is used.
+Texar has modules for both BERT and regular Transformers and allows for an easy connection of BERT and a Transformer decoder.
+The code for the complete architecture is only a few hundred lines of code.
+Nearly every hyperparameter, like the number of decoder layers, number of attention heads or just simple settings like the learning rate, can easily be modified.
+As an example, the hyperparameter configuration for the Transformer decoder is shown in \cref{lst:hyperparameters-decoder}.
+
+\begin{lstlisting}[numbers=none,language=Python,caption={Hyperparameters for Transformer decoder},captionpos=b,label=lst:hyperparameters-decoder,float]
 hidden_dim = 768
 
 decoder = {
@@ -119,15 +128,6 @@ decoder = {
 }
 \end{lstlisting}
 
-For the actual implementation of the network, the Texar toolkit \cite{hu2019texar} is used.
-Texar is an open-source modular toolkit that provides plenty of useful abstractions for fast prototyping of neural network architectures with a special focus on natural language processing.
-It comes in two nearly identical versions, one for TensorFlow \cite{tensorflow2015-whitepaper} and one for PyTorch \cite{NEURIPS2019_9015}.  
-For this work, the TensorFlow version is used.
-Texar has modules for both BERT and regular Transformers and allows for an easy connection of BERT and a Transformer decoder.
-The code for the complete architecture is only a few hundred lines of code.
-Nearly every hyperparameter, like the number of decoder layers, number of attention heads or just simple settings like the learning rate, can easily be modified.
-As an example, the hyperparameter configuration for the Transformer decoder is shown in \cref{lst:hyperparameters-decoder}.
-
 % ====================
 % EXPLORING HYPERPARAMETERS
 % ====================
@@ -137,14 +137,6 @@ As an example, the hyperparameter configuration for the Transformer decoder is s
 This section explores the hyperparameters used.
 The parameters were determined empirically by testing multiple variations.
 After multiple tests, the following hyperparameters yielded the best results.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.6\paperwidth]{figures/learning-rate}
-\caption{Visualization of the learning rate with $warmup\_steps = 4000$}
-\label{fig:learning-rate}
-\end{figure}
-
 \paragraph{Optimizer and Learning Rate}
 
 The Adam optimizer \cite{article} is used with $\beta_1=0.9$, $\beta_2=0.997$, and $\epsilon = 10^{-9}$.
@@ -157,6 +149,13 @@ Results for tests with a constant linear learning rate have been slightly worse.
 The warmup steps are set to $warmup\_steps = 4000$.
 The formula can be interpreted as linearly increasing the learning rate until $warmup\_steps < steps$ and then steadily decreasing it again.
 The function's graph is visualized in \cref{fig:learning-rate}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\paperwidth]{figures/learning-rate}
+\caption{Visualization of the learning rate with $warmup\_steps = 4000$}
+\label{fig:learning-rate}
+\end{figure}
 
 \paragraph{Batch Size and Maximum Sequence Length}
 

@@ -23,13 +23,6 @@ A popular example of unlabeled text data is Wikipedia, which contains over a bil
 
 \subsection{Neural Networks}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.45\paperwidth]{figures/neural-network}
-\caption{Simple feed-forward neural network with two hidden layers}
-\label{fig:neural-network}
-\end{figure}
-
 Artificial neural networks are currently a popular and common way to learn from data due to the availability of better hardware and an increasing amount of training data.
 A typical neural network consists of neurons that are inspired by real brain neurons and connections between these neurons.
 Each neuron can be seen as a function that takes the values of all its predecessor nodes as input and outputs a value that, by itself, is used as the input for its successor nodes.
@@ -52,6 +45,13 @@ The values of the nodes in the output layer are used as the output of the whole 
 Every layer in between these two layers is called a hidden layer.
 While the nodes in the hidden layer usually have a nonlinear activation function, nodes in the output layer sometimes have a linear activation function like ReLU if the output is an absolute value. 
 Such a network is shown in \cref{fig:neural-network} \cite[p.~17--20]{Aggarwal2018}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\paperwidth]{figures/neural-network}
+\caption{Simple feed-forward neural network with two hidden layers}
+\label{fig:neural-network}
+\end{figure}
 
 \paragraph{Backpropagation}
 
@@ -127,13 +127,6 @@ The Transformer network takes advantage of the attention mechanism while avoidin
 
 Just like sequence-to-sequence RNNs, the Transformer consists of an encoder and a decoder that both have multiple stacks of layers.
 
-\begin{figure}[h]
-\centering
-\includegraphics{figures/transformer-model}
-\caption[Model architecture of a Transformer]{Model architecture of a Transformer \cite[p.~3]{1706.03762}}
-\label{fig:transformer-model}
-\end{figure}
-
 An encoder layer consists of two sublayers.
 The first sublayer is a multi-head self-attention mechanism, which is described later in this section.
 The second sublayer is a position-wise\footnote{The identical network is applied to each position separately \cite[p.~5]{1706.03762}.} fully connected feed-forward network.
@@ -146,6 +139,13 @@ The multi-head self-attention sublayer is masked to prevent it from attending to
 
 In the original Transformer, $N = 6$ stacked encoder and decoder layers are used for both the base and the big model.
 The complete architecture of the Transformer is visualized in \cref{fig:transformer-model}.
+
+\begin{figure}[h]
+\centering
+\includegraphics{figures/transformer-model}
+\caption[Model architecture of a Transformer]{Model architecture of a Transformer \cite[p.~3]{1706.03762}}
+\label{fig:transformer-model}
+\end{figure}
 
 The inputs are simple learned embedding vectors of dimension $d_{model}$ that are concatenated with a fixed positional embedding \cite[p.~5--6]{1706.03762}.
 These fixed input embeddings encode the position of the sequence elements as this information is otherwise no longer accessible to the network because of the missing recurrence.
@@ -170,13 +170,6 @@ For the outputs, a learned linear transformation and a softmax function are used
 
 \paragraph{Attention}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\paperwidth]{figures/scaled-dot-product-multihead-attention}
-\caption[Visualization of scaled dot-product attention and multi-mead attention]{Visualization of scaled dot-product attention and multi-head attention \cite[p.~4]{1706.03762}}
-\label{fig:scaled-dot-product-multihead-attention}
-\end{figure}
-
 The Transformer attention consists of query, key, and value vectors.
 The query vectors are used to select values by their corresponding keys.
 The Transformer implements this as a scaled dot-product attention, wherein queries and keys have the dimension $d_k$ and the values the dimension $d_v$.
@@ -192,6 +185,13 @@ This means that instead of having a single attention function, the queries, keys
 After performing the attention function on the projected matrices, they are concatenated and projected again.
 The dimension of each learned linear projection is the model's dimension $d_{model}$ divided by the number of attention layers $h$.
 \Cref{fig:scaled-dot-product-multihead-attention} shows both the scaled dot-product attention (left) and the multi-head attention (right).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\paperwidth]{figures/scaled-dot-product-multihead-attention}
+\caption[Visualization of scaled dot-product attention and multi-mead attention]{Visualization of scaled dot-product attention and multi-head attention \cite[p.~4]{1706.03762}}
+\label{fig:scaled-dot-product-multihead-attention}
+\end{figure}
 
 \subsection{Advantages}
 
@@ -224,14 +224,6 @@ The benefit of language models is that most of them can be trained on unlabeled 
 This allows them to learn from a huge amount of data as there is no need for time-consuming labeling of the training data and any texts can be used.
 By pretraining them on normal texts, the networks can get a general sense of natural language, which can then be used for more specific tasks.
 
-% TODO Not sure if I keep using this or create an own one / just remove it
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\paperwidth]{figures/bert-gpt2-elmo-model-comparison}
-\caption[Visualization of the different model architectures]{Visualization of the different model architectures \cite[p.~13]{devlin2018bert}}
-\label{fig:bert-gpt2-elmo-model-comparison}
-\end{figure}
-
 What is new about BERT compared to other models like GPT-2 is that it is the first deeply bidirectional language model that takes advantage of the whole context around a word.
 OpenAI's GPT-2 uses a left-to-right Transformer decoder \cite[p.~4]{radford2019language}, which only allows it to "look" at the words to the left when generating a representation for an input token.
 For example, with a sentence that starts with "The lighter," the network can only look at these two words to generate a representation for the word "lighter."
@@ -239,6 +231,14 @@ However, the word can have completely different meanings depending on the whole 
 ELMo compensates for this issue by training two LSTMs, one being a normal forward LSTM (left-to-right) and the other one being a backward LSTM (right-to-left), which is given the input sequence in reverse \cite[p.~2--3]{1802.05365}.
 Afterward, it concatenates the representations of these two LSTMs to get a semi-bidirectional representation.
 \Cref{fig:bert-gpt2-elmo-model-comparison} presents the different architectures.
+
+% TODO Not sure if I keep using this or create an own one / just remove it
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.7\paperwidth]{figures/bert-gpt2-elmo-model-comparison}
+\caption[Visualization of the different model architectures]{Visualization of the different model architectures \cite[p.~13]{devlin2018bert}}
+\label{fig:bert-gpt2-elmo-model-comparison}
+\end{figure}
 
 \subsection{Model Architecture}
 

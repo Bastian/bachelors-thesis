@@ -60,6 +60,11 @@ Examples of topics are "industrial designer presentation", "evaluation of protot
 
 \paragraph{Abstractive Summaries}
 
+For each scenario meeting, abstractive summaries are available.
+Each abstractive summary consists of an abstract, decisions, problems/issues, and actions.
+The abstract usually consists of multiple sentences.
+An example of such an abstract with three sentences is shown in \cref{fig:abstractive-summary-example}.
+
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
 S1: The project manager introduced the upcoming project to the 
@@ -75,16 +80,16 @@ S3: The team then discussed various features to consider in making
 \label{fig:abstractive-summary-example}
 \end{figure}
 
-For each scenario meeting, abstractive summaries are available.
-Each abstractive summary consists of an abstract, decisions, problems/issues, and actions.
-The abstract usually consists of multiple sentences.
-An example of such an abstract with three sentences is shown in \cref{fig:abstractive-summary-example}.
-
 Additionally, for each sentence of the abstractive summary, one or more dialogue acts are selected that are linked together.
 These dialogue acts are the ones that had the most influence on the summary sentence.
 This mapping of $n$ dialogue acts to one sentence of the summary is later used for training, as further described in \cref{sec:system-description-training} \cite{amiWebsite}.
 
 \subsection{Segmentation of the Corpus}\label{ssec:ami-segmentation-of-the-corpus}
+
+To make results comparable with other works that use the corpus, the corpus is split into training, development, and test sets.
+The training set is the data that a system is allowed to see during training.
+The development set can be used to automatically monitor results during training, while the test set is only used in the end to report final results.
+For the scenario meetings, the data distribution is shown in \cref{tab:meeting-time-distribution} \cite{amiWebsite}.
 
 \begin{table}[h]
 \centering
@@ -98,11 +103,6 @@ Test                             & approx. 11 hours                  & 20 meetin
 \caption[Distribution of training, development, and test sets]{Distribution of training, development, and test sets \cite{amiWebsite}}
 \label{tab:meeting-time-distribution}
 \end{table}
-
-To make results comparable with other works that use the corpus, the corpus is split into training, development, and test sets.
-The training set is the data that a system is allowed to see during training.
-The development set can be used to automatically monitor results during training, while the test set is only used in the end to report final results.
-For the scenario meetings, the data distribution is shown in \cref{tab:meeting-time-distribution} \cite{amiWebsite}.
 
 % ==============
 % ICSI MEETING CORPUS
@@ -136,6 +136,12 @@ For the ICSI Meeting Corpus, only automatic topic segmentation is available but 
 
 \paragraph{Segmentation of the Corpus}
 
+Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development, and test sets.
+However, the traditional test set consists of six meetings: Bed\{004, 009, 016\}, Bmr\{005, 019\}, and Bro018 \cite{inproceedings}.
+For the development set, this work uses six randomly chosen meetings: Bmr018, Bns001, Bro\{008, 025, 026\}, and Buw001.
+The remaining meetings are part of the training data set.
+The full list of the data split is shown in \cref{fig:icsi-split}.
+
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
 TRAIN: Bdb001, Bed002, Bed003, Bed005, Bed006, Bed008, Bed010,
@@ -151,11 +157,5 @@ TEST:  Bed004, Bed009, Bed016, Bmr005, Bmr019, Bro018
 \caption{The exact data split used for the ICSI Meeting Corpus}
 \label{fig:icsi-split}
 \end{figure}
-
-Unlike the AMI corpus, the ICSI Meeting Corpus does not come with a predefined split for training, development, and test sets.
-However, the traditional test set consists of six meetings: Bed\{004, 009, 016\}, Bmr\{005, 019\}, and Bro018 \cite{inproceedings}.
-For the development set, this work uses six randomly chosen meetings: Bmr018, Bns001, Bro\{008, 025, 026\}, and Buw001.
-The remaining meetings are part of the training data set.
-The full list of the data split is shown in \cref{fig:icsi-split}.
 
 % TODO Either summarize this chapter or add brief introduction of the next chapter

@@ -11,6 +11,25 @@ It also introduces a simple baseline for better comparison.
 
 \section{Initial Experiments}\label{sec:initial-experiments}
 
+For the first experiments, the network is trained to summarize $n$ dialogue acts to one sentence of a meeting's abstract.
+Results for the following combinations are reported:
+
+\begin{itemize}
+\item Trained on the AMI train dataset, validated on the AMI eval dataset, tested on the AMI test dataset (\textbf{AAA})
+\item Trained on the AMI train dataset, validated on the AMI eval dataset, tested on the ICSI corpus (\textbf{AAI})
+\item Trained, validated, and tested on the ICSI corpus, using a the split described in \cref{sec:icsi-corpus} (\textbf{III})
+\item Trained on the ICSI train dataset, validated on the ICSI eval dataset, tested on the AMI test dataset (\textbf{IIA})
+\item Trained, validated, and tested on a combined AMI and ICSI corpus, with all the datasets being merged with the datasets of the other corpus\footnote{\Eg\ the combined train set is the AMI train set + the ICSI train set} (\textbf{CCC})
+\item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCA})
+\item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCI})
+\end{itemize}
+
+A single training step took, on average, about $0.41$ seconds on a single GeForce RTX 2080 Ti GPU which in turn results in a training time of about one hour for the fastest variant (AAA) and three hours for the slowest variant (CCC).
+The achieved ROUGE scores are shown in \cref{tab:initial-experiment-rouge}.
+While the results for AAA, CCC, and CCA are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
+The network also achieves way worse results on the more diversified ICSI Meeting Corpus compared to the AMI Meeting Corpus with its narrow scenario.
+Training the network on both corpora does not improve the test results for a single corpus.
+
 \begin{table}[h]
 \centering
 \begin{tabular}{c|l|clll}
@@ -41,26 +60,10 @@ It also introduces a simple baseline for better comparison.
 \label{tab:initial-experiment-rouge}
 \end{table}
 
-For the first experiments, the network is trained to summarize $n$ dialogue acts to one sentence of a meeting's abstract.
-Results for the following combinations are reported:
-
-\begin{itemize}
-\item Trained on the AMI train dataset, validated on the AMI eval dataset, tested on the AMI test dataset (\textbf{AAA})
-\item Trained on the AMI train dataset, validated on the AMI eval dataset, tested on the ICSI corpus (\textbf{AAI})
-\item Trained, validated, and tested on the ICSI corpus, using a the split described in \cref{sec:icsi-corpus} (\textbf{III})
-\item Trained on the ICSI train dataset, validated on the ICSI eval dataset, tested on the AMI test dataset (\textbf{IIA})
-\item Trained, validated, and tested on a combined AMI and ICSI corpus, with all the datasets being merged with the datasets of the other corpus\footnote{\Eg\ the combined train set is the AMI train set + the ICSI train set} (\textbf{CCC})
-\item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCA})
-\item Trained and validated on a combined AMI and ICSI corpus, tested on the AMI test data(\textbf{CCI})
-\end{itemize}
-
-All the reported results were calculated on the test set.
-
-A single training step took, on average, about $0.41$ seconds on a single GeForce RTX 2080 Ti GPU which in turn results in a training time of about one hour for the fastest variant (AAA) and three hours for the slowest variant (CCC).
-The achieved ROUGE scores are shown in \cref{tab:initial-experiment-rouge}.
-While the results for AAA, CCC, and CCA are good, the network failed to generalize enough to obtain useful results for the two cross-corpus variations AAI and IAA.
-The network also achieves way worse results on the more diversified ICSI Meeting Corpus compared to the AMI Meeting Corpus with its narrow scenario.
-Training the network on both corpora does not improve the test results for a single corpus.
+\Cref{fig:initial-experiment-example} shows two hand-picked examples of generated summaries together with the input and the human summary.
+It is easily noticeable that the network tends to overfit the data as the generated summary contains information that is not part of the actual input but can only be guessed if the setting of AMI's scenario meetings is taken into account (\eg, that the final report is always written by the project manager).
+This explains the bad results for the AAI and IAA variations as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
+It is also a strong indicator that more training data is necessary for the network to learn to generalize, especially considering the very specific context of the AMI scenario meetings.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
@@ -84,11 +87,6 @@ MS: the project manager will create a final report
 \label{fig:initial-experiment-example}
 \end{figure}
 
-\Cref{fig:initial-experiment-example} shows two hand-picked examples of generated summaries together with the input and the human summary.
-It is easily noticeable that the network tends to overfit the data as the generated summary contains information that is not part of the actual input but can only be guessed if the setting of AMI's scenario meetings is taken into account (\eg, that the final report is always written by the project manager).
-This explains the bad results for the AAI and IAA variations as the network tries to apply the setting of the AMI corpus to the ICSI corpus and vice versa.
-It is also a strong indicator that more training data is necessary for the network to learn to generalize, especially considering the very specific context of the AMI scenario meetings.
-
 However, the network is able to correctly interpret the context of a sentence and is---at least to a certain degree---able to generate new sentences.
 The generated summary from the first example in \cref{fig:initial-experiment-example} is not present in the training data at all but constructed from multiple different sentences.
 The generated summary from the second example is identical to a human summary that was used for training but for another input.
@@ -110,6 +108,14 @@ HS: The project manager will create a final report
 % ================
 
 \section{Extended Experiments}
+
+For the extended experiments, the topic segmentation described in \cref{ssec:ami-annotations} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
+This results in one summary sentence for each topic of a meeting.
+By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
+For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus} as there is no manual topic segmentation available for the ICSI Meeting Corpus. % TODO Maybe use the automatic segmentation with the automatic transcript?
+
+An example of a generated summary is shown in \cref{fig:extended-experiment-example}.
+The achieved ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
 
 \begin{figure}[h]
 \begin{lstlisting}[numbers=none]
@@ -156,31 +162,7 @@ project manager closed the meeting.
 \label{tab:extended-experiment-rouge}
 \end{table}
 
-For the extended experiments, the topic segmentation described in \cref{ssec:ami-annotations} is used to split meeting transcripts into smaller pieces that are used as inputs for the same network trained in \cref{sec:initial-experiments}.
-This results in one summary sentence for each topic of a meeting.
-By concatenating all these summary sentences of one meeting, one can get a summary of the entire meeting.
-For this experiment, only the AMI Meeting Corpus is used with the standard data split described in \cref{ssec:ami-segmentation-of-the-corpus} as there is no manual topic segmentation available for the ICSI Meeting Corpus. % TODO Maybe use the automatic segmentation with the automatic transcript?
-
-An example of a generated summary is shown in \cref{fig:extended-experiment-example}.
-The achieved ROUGE scores are shown in \cref{tab:extended-experiment-rouge}.
-
 \paragraph{Comparison to Other Approaches}
-
-\begin{table}[]
-\centering
-\begin{tabular}{@{}lcc@{}}
-\toprule
-                       & \textbf{R-1}     & \textbf{R-2}     \\ \midrule
-\textbf{Neural (Ours)} & 33.54                & \underline{\textbf{12.90}} \\
-\textbf{Ref-A}         & \underline{\textbf{37.86}} & 7.84                 \\
-\textbf{Ref-B}         & 30.6                 & 6.8                  \\
-\textbf{Ref-C}         & 31.5                 & 6.7                  \\
-\textbf{Ref-D}         & 28.7                 & 4.2                  \\
-\textbf{Baseline}      & 28.32                & 8.48                 \\ \bottomrule
-\end{tabular}
-\caption{Comparison of different approaches for abstractive meeting summarization and a baseline}
-\label{tab:comparison}
-\end{table}
 
 The metrics used to report results are very different, and many of them are only reported for the AMI Meeting Corpus.
 Some researchers only report the ROUGE-1 and ROUGE-2 scores using the F1 measure, while others also report ROUGE-L or ROUGE-SU4 scores with recall, precision, and F1 measures.
@@ -200,6 +182,28 @@ While this is also true for the model of this work, it has access to the abstrac
 Because all of AMI's scenario meetings have a very similar structure, the abstracts in the training data tend to be very similar to the abstracts in the test dataset.
 This gives the network an unfair advantage over the other approaches and makes the results hardly comparable.
 
+\begin{table}[]
+\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+                       & \textbf{R-1}     & \textbf{R-2}     \\ \midrule
+\textbf{Neural (Ours)} & 33.54                & \underline{\textbf{12.90}} \\
+\textbf{Ref-A}         & \underline{\textbf{37.86}} & 7.84                 \\
+\textbf{Ref-B}         & 30.6                 & 6.8                  \\
+\textbf{Ref-C}         & 31.5                 & 6.7                  \\
+\textbf{Ref-D}         & 28.7                 & 4.2                  \\
+\textbf{Baseline}      & 28.32                & 8.48                 \\ \bottomrule
+\end{tabular}
+\caption{Comparison of different approaches for abstractive meeting summarization and a baseline}
+\label{tab:comparison}
+\end{table}
+
+To still have a baseline that results can be compared to, one can randomly pick a summary sentence from the training data for every topic.
+If the network is able to understand the meaning of its input, it should outperform this baseline.
+This baseline is also included in the comparison \cref{tab:comparison}, and all scores are also shown in \cref{tab:extended-experiment-rouge-random}.
+When comparing the network's scores with this baseline, the results of the network indeed outperform the baseline by a significant margin.
+The fact that even this simple baseline achieves higher ROUGE-2 scores than any of the unsupervised approaches is a clear indicator that the access to the abstracts of the training data is indeed an unfair advantage.
+
 \begin{table}[h]
 \centering
 \begin{tabular}{@{}clll@{}}
@@ -212,12 +216,6 @@ This gives the network an unfair advantage over the other approaches and makes t
 \caption{ROUGE scores of random baseline}
 \label{tab:extended-experiment-rouge-random}
 \end{table}
-
-To still have a baseline that results can be compared to, one can randomly pick a summary sentence from the training data for every topic.
-If the network is able to understand the meaning of its input, it should outperform this baseline.
-This baseline is also included in the comparison \cref{tab:comparison}, and all scores are also shown in \cref{tab:extended-experiment-rouge-random}.
-When comparing the network's scores with this baseline, the results of the network indeed outperform the baseline by a significant margin.
-The fact that even this simple baseline achieves higher ROUGE-2 scores than any of the unsupervised approaches is a clear indicator that the access to the abstracts of the training data is indeed an unfair advantage.
 
 \paragraph{Issues with the Generated Summary}
 
