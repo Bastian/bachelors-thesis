@@ -8,7 +8,7 @@ This can either be achieved by using hardware with more memory like Google's Clo
 While multiple GPUs were not supported by BERT originally, there have been many successful attempts that use Uber's Horovod \cite{sergeev2018horovod} to utilize multiple GPUs.
 
 Another way to improve the network's performance is to find a way to give the network access to speakers' information and their roles.
-Currently, only concatenated dialogue acts or the plain transcript is used as input for the neural network, but in many cases, it would be beneficial for the network to have additional information about who said which sentences.
+Currently, only concatenated dialogue acts or the plain transcript are used as input for the neural network, but in many cases, it would be beneficial for the network to have additional information about who said which sentences.
 With this information, it might generate sentences like "The project manager closed the meeting" without having to guess the information from the meeting's context.
 
 Finally, to build a real end-to-end meeting summarizer, it is also necessary to automatically split a meeting transcript by topics.
