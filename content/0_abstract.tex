@@ -28,7 +28,7 @@ This work analyzes how a state-of-the-art pretrained neural network---such as Go
 As part of this work, a Transformer network \cite{1706.03762} is developed that uses BERT as its encoder and a plain decoder.
 It is trained on the AMI Meeting Corpus \cite{Mccowan05theami} as well as the ICSI Meeting Corpus \cite{Janin}.
 To circumvent the high memory usage of BERT at long sequence lengths and the fact that BERT is pretrained with a maximum sequence length of 512 \cite[p.~13]{devlin2018bert}, the summarization is performed using a two-step approach.
-First, the network is trained to summarize \(n\) dialogue acts into a single sentence of the meeting's abstractive summary.
+First, the network is trained to summarize a set of dialogue acts into a single sentence of the meeting's abstractive summary.
 Afterward, a whole meeting is split up by its topics, and all the dialogue acts of a topic are fed into the trained network as its input.
 The concatenated outputs of the Transformer for every topic comprise the final summary.
 
